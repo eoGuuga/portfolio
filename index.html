@@ -20,6 +20,15 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
   />
+  <style>
+    /* Mantém quebras de linha no texto digitado */
+    #typing-text {
+      white-space: pre-wrap;
+      font-weight: 300;
+      line-height: 1.6;
+      margin-top: 1em;
+    }
+  </style>
 </head>
 <body>
   <nav role="navigation" aria-label="Menu principal">
@@ -33,15 +42,7 @@
     <p><strong>Estudante de Ciência da Computação | Desenvolvedor Júnior</strong></p>
 
     <h2>Sobre Mim</h2>
-    <p>
-      Sou estudante de Ciência da Computação no quarto semestre, com sólida base em linguagens como C#, C++, Node.js, JavaScript, Java, HTML e CSS. Tenho experiência prática em projetos acadêmicos envolvendo Arduino e desenvolvimento web, além de certificados em GitHub básico, Java e inteligência artificial para iniciantes.
-    </p>
-    <p>
-      Meu Trabalho de Conclusão de Curso envolveu a criação de uma maquete com controle via Bluetooth para acender e apagar luzes, utilizando sensores de fumaça para alertas. Busco uma oportunidade para aplicar meus conhecimentos, expandir habilidades e contribuir com projetos inovadores em tecnologia.
-    </p>
-    <p>
-      Sou motivado, dedicado e comprometido em construir uma carreira sólida na área de desenvolvimento de software, sempre aprendendo e compartilhando conhecimento.
-    </p>
+    <p id="typing-text"></p>
   </main>
 
   <button
@@ -59,5 +60,32 @@
   </footer>
 
   <script src="js/script.js"></script>
+  <script>
+    const typingText = `Sou estudante de Ciência da Computação no quarto semestre, com sólida base em linguagens como C#, C++, Node.js, JavaScript, Java, HTML e CSS. Tenho experiência prática em projetos acadêmicos envolvendo Arduino e desenvolvimento web, além de certificados em GitHub básico, Java e inteligência artificial para iniciantes.
+
+Meu Trabalho de Conclusão de Curso envolveu a criação de uma maquete com controle via Bluetooth para acender e apagar luzes, utilizando sensores de fumaça para alertas. Busco uma oportunidade para aplicar meus conhecimentos, expandir habilidades e contribuir com projetos inovadores em tecnologia.
+
+Sou motivado, dedicado e comprometido em construir uma carreira sólida na área de desenvolvimento de software, sempre aprendendo e compartilhando conhecimento.`;
+
+    const typingElement = document.getElementById('typing-text');
+    let index = 0;
+    const typingSpeed = 8; // milissegundos por letra
+
+    function type() {
+      if (index < typingText.length) {
+        if (typingText[index] === '\n') {
+          typingElement.innerHTML += '<br>';
+        } else {
+          typingElement.innerHTML += typingText[index];
+        }
+        index++;
+        setTimeout(type, typingSpeed);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      type();
+    });
+  </script>
 </body>
 </html>

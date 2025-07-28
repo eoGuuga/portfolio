@@ -61,19 +61,41 @@
 
     <p style="margin-top: 2em;">
       Ou me encontre nas redes:
-      <a class="btn" href="mailto:Guuga.dev20@gmail.com" target="_blank" rel="noopener">
+      <a
+        id="btnEmail"
+        class="btn"
+        href="#"
+        role="button"
+        aria-label="Copiar email para área de transferência"
+      >
         <i class="fas fa-envelope"></i> Email
       </a>
-      <a class="btn" href="https://www.linkedin.com/in/gustavo-henrick-dev20" target="_blank" rel="noopener">
+      <a
+        class="btn"
+        href="https://www.linkedin.com/in/gustavo-henrick-dev20"
+        target="_blank"
+        rel="noopener"
+      >
         <i class="fab fa-linkedin"></i> LinkedIn
       </a>
-      <a class="btn" href="https://github.com/GuugaDev20" target="_blank" rel="noopener">
+      <a
+        class="btn"
+        href="https://github.com/eoGuuga"
+        target="_blank"
+        rel="noopener"
+      >
         <i class="fab fa-github"></i> GitHub
       </a>
     </p>
   </main>
 
-  <button id="toggleDarkMode" class="toggle-mode-btn" title="Alternar modo escuro/claro" aria-pressed="false" aria-label="Alternar modo escuro/claro">
+  <button
+    id="toggleDarkMode"
+    class="toggle-mode-btn"
+    title="Alternar modo escuro/claro"
+    aria-pressed="false"
+    aria-label="Alternar modo escuro/claro"
+  >
     <i class="fas fa-moon" aria-hidden="true"></i>
   </button>
 
@@ -121,6 +143,24 @@
         msg.textContent = 'Erro de conexão.';
         msg.className = 'error';
       }
+    });
+
+    const btnEmail = document.getElementById('btnEmail');
+    const email = 'Guuga.dev20@gmail.com';
+    const originalText = btnEmail.innerHTML;
+
+    btnEmail.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      navigator.clipboard.writeText(email).then(() => {
+        btnEmail.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+
+        setTimeout(() => {
+          btnEmail.innerHTML = originalText;
+        }, 2000);
+      }).catch(() => {
+        alert('Falha ao copiar o email. Por favor, copie manualmente.');
+      });
     });
   </script>
 </body>

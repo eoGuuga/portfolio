@@ -12,8 +12,11 @@
   --main-bg: rgba(255, 255, 255, 0.1);
   --main-text-color: #e0e0ff;
   --project-bg: rgba(255, 255, 255, 0.15);
-  --btn-bg: #836fff;
-  --btn-bg-hover: #9b87ff;
+  
+  /* Ajuste nos botões para melhorar contraste no modo claro */
+  --btn-bg: #5a4bcf;
+  --btn-bg-hover: #7f6fe7;
+  
   --footer-color: #b6b5d8;
   --toggle-bg: linear-gradient(135deg, #836fff, #5e3eea);
   --toggle-bg-hover: linear-gradient(135deg, #9b87ff, #7c61ff);
@@ -31,6 +34,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   user-select: text;
+}
+
+/* Centraliza o texto do strong dentro do p do main */
+main > p strong {
+  display: block;
+  text-align: center;
+  font-weight: 600; /* reforça o negrito */
 }
 
 /* Dark mode custom properties */
