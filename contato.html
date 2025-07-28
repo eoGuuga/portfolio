@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contato - Gustavo Henrick</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+</head>
+<body>
+  <nav>
+    <a href="index.html">Sobre</a>
+    <a href="projetos.html">Projetos</a>
+    <a href="contato.html" class="active">Contato</a>
+  </nav>
+
+  <main>
+    <h1>Contato</h1>
+    <p>
+      Estou aberto a oportunidades e colaborações. Fique à vontade para me contatar via email, LinkedIn ou GitHub, ou envie uma mensagem diretamente por aqui:
+    </p>
+
+    <form id="contactForm" novalidate>
+      <label for="name">Nome</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Seu nome"
+        required
+        class="input-text"
+      />
+
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="seuemail@exemplo.com"
+        required
+        class="input-text"
+      />
+
+      <label for="message">Mensagem</label>
+      <textarea
+        id="message"
+        name="message"
+        placeholder="Escreva sua mensagem aqui..."
+        rows="6"
+        required
+        class="input-text"
+      ></textarea>
+
+      <button type="submit" class="btn">Enviar</button>
+
+      <p id="formMessage" role="alert" aria-live="polite" style="margin-top: 1em;"></p>
+    </form>
+
+    <p style="margin-top: 2em;">
+      Ou me encontre nas redes:
+      <a class="btn" href="mailto:Guuga.dev20@gmail.com" target="_blank" rel="noopener">
+        <i class="fas fa-envelope"></i> Email
+      </a>
+      <a class="btn" href="https://www.linkedin.com/in/gustavo-henrick-dev20" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i> LinkedIn
+      </a>
+      <a class="btn" href="https://github.com/GuugaDev20" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </p>
+  </main>
+
+  <button id="toggleDarkMode" class="toggle-mode-btn" title="Alternar modo escuro/claro" aria-pressed="false" aria-label="Alternar modo escuro/claro">
+    <i class="fas fa-moon" aria-hidden="true"></i>
+  </button>
+
+  <footer>
+    <p>© 2025 Gustavo Henrick Rodrigues Da Silva</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const msg = document.getElementById('formMessage');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        message: form.message.value.trim(),
+      };
+
+      if (!data.name || !data.email || !data.message) {
+        msg.textContent = 'Por favor, preencha todos os campos.';
+        msg.className = 'error';
+        return;
+      }
+
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbyaM9ZrZeEkNc2mWFips8eM6F656YKaZpYOr0v9ApZELqOZ_1aiFkkI0PEZVuNdELvs/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          msg.textContent = 'Mensagem enviada com sucesso!';
+          msg.className = 'success';
+          form.reset();
+        } else {
+          msg.textContent = 'Erro ao enviar. Tente novamente mais tarde.';
+          msg.className = 'error';
+        }
+      } catch (error) {
+        msg.textContent = 'Erro de conexão.';
+        msg.className = 'error';
+      }
+    });
+  </script>
+</body>
+</html>
