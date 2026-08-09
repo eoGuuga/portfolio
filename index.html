@@ -71,11 +71,17 @@
 }
 
 /* ---------- camada de idioma ----------
-   Português é o documento. Inglês fica oculto por CSS e só
-   aparece quando o JS marca data-lang="en" na raiz. Sem JS,
-   a página inteira continua em português.                    */
-[data-l="en"]{display:none}
-html[data-lang="en"] [data-l="en"]{display:revert}
+   Português é o documento. Inglês fica oculto por CSS e só aparece quando o
+   JS marca data-lang="en" na raiz. Sem JS, a página inteira fica em português.
+
+   As duas regras só ESCONDEM, e ambas têm especificidade de dois seletores,
+   para vencerem qualquer classe que defina display. A versão anterior usava
+   [data-l="en"]{display:none}, de especificidade um, que empatava com
+   .botao{display:inline-block} e perdia por vir antes: o botão de PDF em
+   inglês reaparecia na página em português. Também não se restaura display
+   com revert, que devolveria o valor do agente de usuário e quebraria o
+   inline-block vindo das classes.                                        */
+html:not([data-lang="en"]) [data-l="en"]{display:none}
 html[data-lang="en"] [data-l="pt"]{display:none}
 
 *{box-sizing:border-box;margin:0;padding:0}
