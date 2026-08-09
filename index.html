@@ -335,6 +335,22 @@ section h2{font-size:clamp(1.6rem,2.7vw,2rem);line-height:1.15;letter-spacing:-.
 .pos-cupom{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .pend{color:var(--mut);font-size:14px}
 
+/* Certificações: deliberadamente discreto. Sem cartão, sem fundo, sem cor de
+   destaque, só filete separando. Certificado não pode competir com projeto,
+   que é onde está a evidência real. */
+.certs{list-style:none;margin-top:18px}
+.certs li{padding:14px 0;border-top:1px solid var(--linha)}
+.certs li:first-child{border-top:0;padding-top:0}
+.cert-t{font-weight:650;font-size:1rem}
+.cert-m{font-size:13.5px;color:var(--mut);margin-top:1px}
+.certs .stack-mini{margin-top:9px}
+.verif{
+  margin-left:10px;font-size:12.5px;white-space:nowrap;
+  color:var(--mut);text-decoration:underline;text-underline-offset:3px;
+}
+.verif::after{content:" \2197";text-decoration:none}
+.verif:hover{color:var(--tinta)}
+
 /* stack */
 .grupo-stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
 .grupo-stack h3{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
@@ -399,6 +415,7 @@ footer p+p{margin-top:6px}
         <a href="#projetos"><span data-l="pt" lang="pt-BR">Projetos</span><span data-l="en" lang="en">Work</span></a>
         <a href="#caca-bug"><span data-l="pt" lang="pt-BR">Caça-bug</span><span data-l="en" lang="en">Bug hunt</span></a>
         <a href="#stack"><span data-l="pt" lang="pt-BR">Stack</span><span data-l="en" lang="en">Stack</span></a>
+        <a href="#certificacoes"><span data-l="pt" lang="pt-BR">Certificações</span><span data-l="en" lang="en">Certifications</span></a>
         <a href="#contato"><span data-l="pt" lang="pt-BR">Contato</span><span data-l="en" lang="en">Contact</span></a>
       </nav>
     </div>
@@ -707,6 +724,49 @@ footer p+p{margin-top:6px}
       </div>
     </section>
 
+    <section id="certificacoes">
+      <p class="rotulo"><span data-l="pt" lang="pt-BR">certificações</span><span data-l="en" lang="en">certifications</span></p>
+      <h2 data-l="pt" lang="pt-BR">Formação complementar</h2>
+      <h2 data-l="en" lang="en">Continuing education</h2>
+      <p class="suave" data-l="pt" lang="pt-BR">Os módulos aparecem como conteúdo da formação que os contém, não como
+      certificados avulsos.</p>
+      <p class="suave" data-l="en" lang="en">Modules are listed as content of the program that contains them, not as
+      standalone certificates.</p>
+
+      <!-- VERIFICAÇÃO: só entra link cuja URL foi confirmada resolvendo para a
+           credencial certa. O padrão da Rocketseat, app.rocketseat.com.br/certificates/
+           mais o código, foi conferido em 2026-08-09: devolve o certificado com nome,
+           carga de 181 horas e o mesmo código. Não inventar URL nem código. -->
+      <ul class="certs">
+        <li>
+          <p class="cert-t" data-l="pt" lang="pt-BR">Formação Fullstack em Engenharia de Software</p>
+          <p class="cert-t" data-l="en" lang="en">Full-Stack Software Engineering Program</p>
+          <p class="cert-m">
+            <span data-l="pt" lang="pt-BR">Rocketseat · 181 horas · 2025</span>
+            <span data-l="en" lang="en">Rocketseat · 181 hours · 2025</span>
+            <a class="verif" href="https://app.rocketseat.com.br/certificates/a6152209-f1bb-4cf6-b746-6504ed2329a7" target="_blank" rel="noopener noreferrer"><span data-l="pt" lang="pt-BR">verificar<span class="so-leitor"> o certificado da Formação Fullstack na Rocketseat</span></span><span data-l="en" lang="en">verify<span class="so-leitor"> the Rocketseat Full-Stack program certificate</span></span></a>
+          </p>
+          <ul class="stack-mini">
+            <li>Node.js</li><li>NestJS</li><li>DDD</li><li>React</li><li>JavaScript</li>
+            <li>TypeScript</li><li>Python</li><li>Flask</li><li>MongoDB</li><li>Redis</li>
+            <li>RabbitMQ</li>
+            <li data-l="pt" lang="pt-BR">autenticação JWT</li><li data-l="en" lang="en">JWT authentication</li>
+            <li data-l="pt" lang="pt-BR">arquitetura e padrão MVC</li><li data-l="en" lang="en">MVC architecture and pattern</li>
+            <li data-l="pt" lang="pt-BR">design de código</li><li data-l="en" lang="en">code design</li>
+            <li data-l="pt" lang="pt-BR">HTML e CSS</li><li data-l="en" lang="en">HTML and CSS</li>
+          </ul>
+        </li>
+        <li>
+          <!-- Link de verificação entra quando o badge correto for confirmado. -->
+          <p class="cert-t">Cyber Threat Management</p>
+          <p class="cert-m">
+            <span data-l="pt" lang="pt-BR">Cisco Networking Academy · 16 horas · 2025</span>
+            <span data-l="en" lang="en">Cisco Networking Academy · 16 hours · 2025</span>
+          </p>
+        </li>
+      </ul>
+    </section>
+
     <!-- ==================== momento 2: cupom ==================== -->
     <section id="contato">
       <p class="rotulo"><span data-l="pt" lang="pt-BR">cupom</span><span data-l="en" lang="en">receipt</span></p>
@@ -891,7 +951,7 @@ footer p+p{margin-top:6px}
         }
       });
     },{rootMargin:'-35% 0px -55% 0px'});
-    ['sobre','projetos','caca-bug','stack','contato'].forEach(function(id){
+    ['sobre','projetos','caca-bug','stack','certificacoes','contato'].forEach(function(id){
       var s=document.getElementById(id);if(s)spy.observe(s);
     });
   }
