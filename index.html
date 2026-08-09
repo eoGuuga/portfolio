@@ -7,7 +7,7 @@
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0F1317">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F1EC">
 
-<title>Gustavo Henrick, Desenvolvedor Fullstack · Node.js/TypeScript</title>
+<title>Gustavo Henrick, Desenvolvedor Fullstack · Node.js, TypeScript e Python</title>
 <meta name="description" content="Desenvolvedor fullstack em São Paulo, com força em backend e sistemas transacionais: dinheiro, estoque e integridade que não podem errar. Teste verde não é prova, e tem um caça-bug nesta página para provar.">
 <link rel="canonical" href="https://eoguuga.github.io/portfolio/">
 
@@ -15,14 +15,14 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:site_name" content="Gustavo Henrick">
-<meta property="og:title" content="Gustavo Henrick, Desenvolvedor Fullstack · Node.js/TypeScript">
+<meta property="og:title" content="Gustavo Henrick, Desenvolvedor Fullstack · Node.js, TypeScript e Python">
 <meta property="og:description" content="Teste verde não é prova. Tem um caça-bug nesta página: uma suíte verde que não testa nada. Acha o motivo.">
 <meta property="og:url" content="https://eoguuga.github.io/portfolio/">
 <meta property="og:image" content="https://eoguuga.github.io/portfolio/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Gustavo Henrick, Desenvolvedor Fullstack · Node.js/TypeScript">
+<meta name="twitter:title" content="Gustavo Henrick, Desenvolvedor Fullstack · Node.js, TypeScript e Python">
 <meta name="twitter:description" content="Teste verde não é prova. Tem um caça-bug nesta página: uma suíte verde que não testa nada.">
 <meta name="twitter:image" content="https://eoguuga.github.io/portfolio/og.png">
 
@@ -339,8 +339,10 @@ section h2{font-size:clamp(1.6rem,2.7vw,2rem);line-height:1.15;letter-spacing:-.
    destaque, só filete separando. Certificado não pode competir com projeto,
    que é onde está a evidência real. */
 .certs{list-style:none;margin-top:18px}
-.certs li{padding:14px 0;border-top:1px solid var(--linha)}
-.certs li:first-child{border-top:0;padding-top:0}
+/* Filho direto de propósito: .certs li vazava para os chips do .stack-mini,
+   dando padding de item de lista a todo chip e tirando a borda do primeiro. */
+.certs > li{padding:14px 0;border-top:1px solid var(--linha)}
+.certs > li:first-child{border-top:0;padding-top:0}
 .cert-t{font-weight:650;font-size:1rem}
 .cert-m{font-size:13.5px;color:var(--mut);margin-top:1px}
 .certs .stack-mini{margin-top:9px}
@@ -401,8 +403,8 @@ footer p+p{margin-top:6px}
       <img class="foto" src="foto-gustavo.jpg" alt="Gustavo Henrick" width="112" height="112">
 
       <h1>Gustavo Henrick</h1>
-      <p class="cargo" data-l="pt" lang="pt-BR">Desenvolvedor Fullstack, <strong>Node.js / TypeScript</strong></p>
-      <p class="cargo" data-l="en" lang="en">Software Engineer, <strong>Node.js / TypeScript</strong></p>
+      <p class="cargo" data-l="pt" lang="pt-BR">Desenvolvedor Fullstack, <strong>Node.js, TypeScript e Python</strong></p>
+      <p class="cargo" data-l="en" lang="en">Software Engineer, <strong>Node.js, TypeScript, and Python</strong></p>
       <p class="foco" data-l="pt" lang="pt-BR">Sistemas transacionais: dinheiro, estoque e integridade de dados que não podem errar.</p>
       <p class="foco" data-l="en" lang="en">Transactional systems: money, inventory, and data integrity that cannot be wrong.</p>
       <p class="tese" data-l="pt" lang="pt-BR">Teste verde não é prova. Encontro a classe de defeito que passa pelo teste e chega ao cliente.</p>
@@ -760,8 +762,8 @@ footer p+p{margin-top:6px}
           <!-- Link de verificação entra quando o badge correto for confirmado. -->
           <p class="cert-t">Cyber Threat Management</p>
           <p class="cert-m">
-            <span data-l="pt" lang="pt-BR">Cisco Networking Academy · 16 horas · 2025</span>
-            <span data-l="en" lang="en">Cisco Networking Academy · 16 hours · 2025</span>
+            <span data-l="pt" lang="pt-BR">Cisco Networking Academy · 2025</span>
+            <span data-l="en" lang="en">Cisco Networking Academy · 2025</span>
           </p>
         </li>
       </ul>
@@ -776,7 +778,7 @@ footer p+p{margin-top:6px}
       <div class="cupom-wrap">
         <div class="cupom" id="cupom">
           <p class="c b li">GUSTAVO HENRICK</p>
-          <p class="c mut li"><span data-l="pt" lang="pt-BR">Desenvolvedor Fullstack, Node/TS</span><span data-l="en" lang="en">Software Engineer, Node/TS</span></p>
+          <p class="c mut li"><span data-l="pt" lang="pt-BR">Desenvolvedor Fullstack, Node/TS/Python</span><span data-l="en" lang="en">Software Engineer, Node/TS/Python</span></p>
           <p class="c mut li"><span data-l="pt" lang="pt-BR">São Paulo, Brasil</span><span data-l="en" lang="en">São Paulo, Brazil</span></p>
           <hr class="li">
           <p class="c b li"><span data-l="pt" lang="pt-BR">CUPOM NÃO FISCAL</span><span data-l="en" lang="en">NOT A TAX RECEIPT</span></p>
@@ -843,14 +845,14 @@ footer p+p{margin-top:6px}
     pt:{
       lang:'pt-BR', locale:'pt_BR', botao:'EN', botaoLang:'en',
       rotulo:'Ver esta página em inglês', aviso:'Idioma: português',
-      title:'Gustavo Henrick, Desenvolvedor Fullstack · Node.js/TypeScript',
+      title:'Gustavo Henrick, Desenvolvedor Fullstack · Node.js, TypeScript e Python',
       desc:'Desenvolvedor fullstack em São Paulo, com força em backend e sistemas transacionais: dinheiro, estoque e integridade que não podem errar. Teste verde não é prova, e tem um caça-bug nesta página para provar.',
       ogDesc:'Teste verde não é prova. Tem um caça-bug nesta página: uma suíte verde que não testa nada. Acha o motivo.'
     },
     en:{
       lang:'en', locale:'en_US', botao:'PT', botaoLang:'pt-BR',
       rotulo:'View this page in Portuguese', aviso:'Language: English',
-      title:'Gustavo Henrick, Software Engineer · Node.js/TypeScript',
+      title:'Gustavo Henrick, Software Engineer · Node.js, TypeScript, and Python',
       desc:'Software engineer in São Paulo, Brazil, focused on backend and transactional systems: money, inventory, and data integrity that cannot be wrong. A green test is not proof, and there is a bug hunt on this page to prove it.',
       ogDesc:'A green test is not proof. There is a bug hunt on this page: a green suite that tests nothing. Find out why.'
     }
