@@ -1,91 +1,968 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sobre - Gustavo Henrick</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0F1317">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F1EC">
 
-  <meta name="description" content="Portfólio de Gustavo Henrick, estudante de Ciência da Computação e desenvolvedor júnior." />
-  <meta name="author" content="Gustavo Henrick Rodrigues Da Silva" />
-  <meta name="keywords" content="Desenvolvedor, Ciência da Computação, Portfólio, Projetos, Gustavo Henrick" />
-  
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="css/style.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
-  <style>
-    /* Mantém quebras de linha no texto digitado */
-    #typing-text {
-      white-space: pre-wrap;
-      font-weight: 300;
-      line-height: 1.6;
-      margin-top: 1em;
-    }
-  </style>
+<title>Gustavo Henrick, Desenvolvedor Fullstack · Node.js/TypeScript</title>
+<meta name="description" content="Desenvolvedor fullstack em São Paulo, com força em backend e sistemas transacionais: dinheiro, estoque e integridade que não podem errar. Teste verde não é prova, e tem um caça-bug nesta página para provar.">
+<link rel="canonical" href="https://eoguuga.github.io/portfolio/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:site_name" content="Gustavo Henrick">
+<meta property="og:title" content="Gustavo Henrick, Desenvolvedor Fullstack · Node.js/TypeScript">
+<meta property="og:description" content="Teste verde não é prova. Tem um caça-bug nesta página: uma suíte verde que não testa nada. Acha o motivo.">
+<meta property="og:url" content="https://eoguuga.github.io/portfolio/">
+<meta property="og:image" content="https://eoguuga.github.io/portfolio/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gustavo Henrick, Desenvolvedor Fullstack · Node.js/TypeScript">
+<meta name="twitter:description" content="Teste verde não é prova. Tem um caça-bug nesta página: uma suíte verde que não testa nada.">
+<meta name="twitter:image" content="https://eoguuga.github.io/portfolio/og.png">
+
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%230D1524"/><path d="M18 34l10 10 18-22" fill="none" stroke="%234AD07A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>'>
+
+<!-- Marca a raiz antes da pintura, para que os botões de idioma e tema apareçam
+     sem piscar. Sem JavaScript a classe não entra e os dois ficam ocultos: botão
+     que não faz nada é promessa vazia. -->
+<script>document.documentElement.classList.add('js')</script>
+
+<style>
+/* ============================================================
+   Portfólio de Gustavo Henrick. Bilíngue, pt-BR e en.
+   Moldura sóbria; dois momentos: o caça-bug e o cupom.
+   Dois materiais não mudam com o tema: código é terminal
+   (sempre escuro), cupom é papel (sempre claro).
+   HTML, CSS e JS à mão. Sem framework, sem fonte externa,
+   sem rastreador. O markup carrega o estado final: nada
+   depende de JavaScript ou de animação para ser lido, e sem
+   JavaScript a página fica inteira em português.
+   ============================================================ */
+:root{
+  color-scheme: light dark;
+  /* claro */
+  --pag:#F2F1EC;
+  --painel:#FFFFFF;
+  --tinta:#1E242B;
+  --mut:#5B6570;
+  --linha:#DBDBD2;
+  --acc:#1E7A4B;
+  --erro:#B23A2A;
+  --code-bg:#12161C; --code-tx:#C9D2DC; --code-mut:#718091;
+  --code-ok:#59C98A; --code-erro:#F07C6C; --code-str:#C8A96E;
+  --papel:#FBF6EA; --papel-tinta:#26211A; --papel-mut:#6E6353;
+  --sombra:0 1px 3px rgba(20,24,30,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --pag:#0F1317; --painel:#151A20; --tinta:#E4E8EC; --mut:#98A1AB;
+    --linha:#262C34; --acc:#4FC38A; --erro:#E5655A; --sombra:none;
+  }
+}
+:root[data-theme="dark"]{
+  --pag:#0F1317; --painel:#151A20; --tinta:#E4E8EC; --mut:#98A1AB;
+  --linha:#262C34; --acc:#4FC38A; --erro:#E5655A; --sombra:none;
+}
+
+/* ---------- camada de idioma ----------
+   Português é o documento. Inglês fica oculto por CSS e só
+   aparece quando o JS marca data-lang="en" na raiz. Sem JS,
+   a página inteira continua em português.                    */
+[data-l="en"]{display:none}
+html[data-lang="en"] [data-l="en"]{display:revert}
+html[data-lang="en"] [data-l="pt"]{display:none}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--pag);color:var(--tinta);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  font-size:16.5px;line-height:1.65;
+  -webkit-text-size-adjust:100%;
+  overflow-x:clip;
+}
+.mono{font-family:'Cascadia Mono','Consolas',ui-monospace,monospace}
+a{color:var(--acc)}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2.5px solid var(--acc);outline-offset:3px;border-radius:2px}
+h1,h2,h3{text-wrap:balance}
+section{scroll-margin-top:56px}
+
+.pular{position:absolute;left:-9999px;top:0;z-index:10;background:var(--painel);color:var(--tinta);padding:10px 16px;border:1px solid var(--linha)}
+.pular:focus{left:8px;top:8px}
+.so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- moldura: coluna fixa + conteúdo ---------- */
+/* A coluna é lateral, não metade da página: estreita e fixa, com o conteúdo
+   ocupando a folga. Antes ela levava até 430px e comprimia o texto. */
+/* minmax(0,1fr) e min-width:0 são obrigatórios: item de grid tem min-width:auto,
+   e o bloco de código com white-space:pre estica a coluna além da viewport. */
+.moldura{max-width:1320px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.lateral,.conteudo{min-width:0}
+@media (min-width:1080px){
+  .moldura{grid-template-columns:minmax(250px,320px) minmax(0,1fr);gap:80px}
+  .lateral{position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;justify-content:space-between;padding:64px 0}
+  .conteudo{padding:64px 0 48px}
+}
+.lateral{padding-top:40px}
+.conteudo{padding-top:36px;padding-bottom:48px;max-width:800px}
+
+.foto{width:112px;height:112px;border-radius:16px;object-fit:cover;margin-bottom:22px}
+
+.lateral h1{font-size:clamp(1.9rem,3.4vw,2.35rem);line-height:1.08;letter-spacing:-.015em}
+.lateral .cargo{margin-top:8px;font-size:1rem;color:var(--mut)}
+.lateral .cargo strong{color:var(--tinta)}
+.lateral .foco{margin-top:10px;font-size:.95rem;color:var(--mut)}
+.lateral .tese{
+  margin-top:18px;font-weight:600;font-size:.97rem;
+  border-left:3px solid var(--erro);padding-left:14px;
+}
+.lateral .local{margin-top:14px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+
+/* Controles no topo: o idioma é a primeira coisa que um visitante
+   estrangeiro procura, então tem peso de controle. O tema fica discreto. */
+.controles{display:flex;gap:10px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+.idioma{display:none}
+html.js .idioma{
+  display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+  font-family:'Cascadia Mono','Consolas',ui-monospace,monospace;
+  font-size:13px;font-weight:700;letter-spacing:.1em;
+  background:transparent;color:var(--acc);
+  border:1.5px solid var(--acc);border-radius:7px;padding:7px 13px;
+}
+html.js .idioma:hover{background:var(--acc);color:var(--pag)}
+html.js .idioma svg{flex:none}
+
+nav.indice{margin-top:34px}
+nav.indice a{
+  display:flex;align-items:center;gap:12px;
+  padding:7px 0;text-decoration:none;color:var(--mut);
+  font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+}
+nav.indice a::before{content:"";width:28px;height:1.5px;background:var(--mut);transition:width .25s ease,background .25s ease}
+nav.indice a:hover,nav.indice a.ativa{color:var(--tinta)}
+nav.indice a:hover::before,nav.indice a.ativa::before{width:56px;background:var(--tinta)}
+@media (max-width:1079px){nav.indice{display:none}}
+
+/* Bloco de contato: e-mail como ação principal, redes com peso secundário.
+   Antes eram três links sublinhados soltos num vão de espaço vazio. */
+.canais{margin-top:34px}
+.canal-1{
+  display:flex;align-items:center;gap:10px;text-decoration:none;
+  border:1.5px solid var(--acc);border-radius:8px;
+  padding:11px 14px;color:var(--acc);font-weight:700;font-size:14px;
+  transition:background .15s ease,color .15s ease;
+}
+.canal-1 span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.canal-1:hover,.canal-1:focus-visible{background:var(--acc);color:var(--pag)}
+.canal-2{display:flex;gap:8px;margin-top:10px}
+.canal-2 a{
+  display:inline-flex;align-items:center;gap:7px;text-decoration:none;
+  border:1px solid var(--linha);border-radius:8px;
+  padding:9px 12px;color:var(--mut);font-size:13.5px;font-weight:600;
+  transition:color .15s ease,border-color .15s ease;
+}
+.canal-2 a:hover,.canal-2 a:focus-visible{color:var(--tinta);border-color:var(--mut)}
+.canais svg{flex:none}
+
+/* Fecho: a página precisa terminar, não parar. */
+.fecho{margin-top:34px;border-top:1px solid var(--linha);padding-top:26px}
+.fecho h3{font-size:clamp(1.25rem,2.2vw,1.5rem);margin-bottom:8px}
+.fecho p{color:var(--mut);max-width:52ch}
+.fecho-acoes{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px}
+/* Alternadores de idioma e tema só existem com JS: sem ele, não funcionariam. */
+.tecla{display:none}
+html.js .tecla{
+  display:inline-block;
+  font-family:'Cascadia Mono','Consolas',ui-monospace,monospace;font-size:12.5px;cursor:pointer;
+  background:transparent;color:var(--mut);
+  border:1px solid var(--linha);border-radius:6px;padding:6px 11px;
+}
+.tecla:hover{color:var(--tinta);border-color:var(--mut)}
+.tecla[aria-pressed="true"]{color:var(--tinta);border-color:var(--acc)}
+
+/* ---------- conteúdo ---------- */
+/* Hierarquia em três degraus bem separados: rótulo pequeno e espaçado,
+   título grande, corpo normal. Antes o rótulo e o h2 tinham escala parecida
+   e as seções se atropelavam. */
+.rotulo{font-family:'Cascadia Mono','Consolas',monospace;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--acc);font-weight:700}
+section+section{margin-top:132px}
+section h2{font-size:clamp(1.6rem,2.7vw,2rem);line-height:1.15;letter-spacing:-.01em;margin:12px 0 28px}
+.conteudo p+p{margin-top:14px}
+.suave{color:var(--mut)}
+
+/* projetos */
+.cartao{
+  border:1px solid var(--linha);border-radius:10px;background:var(--painel);
+  padding:20px 22px;box-shadow:var(--sombra);
+}
+.cartao+.cartao{margin-top:14px}
+.cartao .origem{font-size:13px;color:var(--mut)}
+.cartao h3{font-size:1.12rem;margin:4px 0 8px}
+.cartao .nums{margin-top:10px;font-weight:650;font-variant-numeric:tabular-nums}
+.cartao .nums::before{content:"▮ ";color:var(--acc)}
+.cartao.principal{border-left:4px solid var(--acc);padding:24px 26px}
+.cartao.principal h3{font-size:1.32rem}
+.cartao.compacto{padding:15px 18px}
+.cartao.compacto h3{font-size:1rem}
+.cartao.compacto p{font-size:.95rem;color:var(--mut)}
+.ia-box{
+  border:1px solid var(--linha);border-left:3px solid var(--acc);border-radius:8px;
+  padding:12px 16px;margin-top:12px;font-size:.97rem;
+}
+.ia-box .ia-rotulo{
+  font-family:'Cascadia Mono','Consolas',monospace;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--acc);margin-bottom:6px;
+}
+.selo{
+  display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--acc);border:1px solid currentColor;
+  border-radius:4px;padding:1px 8px;vertical-align:2px;margin-left:8px;
+}
+.stack-mini{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin-top:12px}
+.stack-mini li{font-family:'Cascadia Mono','Consolas',monospace;font-size:12px;border:1px solid var(--linha);border-radius:5px;padding:2px 8px;color:var(--mut)}
+
+.privado{
+  display:flex;gap:12px;align-items:flex-start;
+  border:1px dashed var(--mut);border-radius:10px;
+  padding:14px 18px;margin-top:18px;font-size:.97rem;
+}
+.privado svg{flex:none;margin-top:4px}
+
+/* ---------- momento 1: caça-bug ---------- */
+.caca .chamada{font-size:1.45rem;font-weight:700;margin:6px 0 4px}
+.caca .instrucao{color:var(--mut);margin-bottom:16px}
+.editor{
+  background:var(--code-bg);border-radius:10px;overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.editor .aba{
+  font-family:'Cascadia Mono','Consolas',monospace;font-size:12.5px;color:var(--code-mut);
+  padding:9px 16px;border-bottom:1px solid rgba(255,255,255,.07);
+}
+.codigo{list-style:none;counter-reset:ln;padding:12px 0;overflow-x:auto}
+.codigo li{counter-increment:ln}
+.codigo .linha{
+  display:block;width:100%;text-align:left;border:0;cursor:default;
+  background:transparent;color:var(--code-tx);
+  font-family:'Cascadia Mono','Consolas',ui-monospace,monospace;
+  font-size:13.5px;line-height:1.75;white-space:pre;
+  padding:0 18px 0 0;
+}
+.codigo .linha::before{
+  content:counter(ln);display:inline-block;width:44px;margin-right:14px;
+  text-align:right;color:var(--code-mut);opacity:.6;
+}
+.armado .codigo .linha{cursor:pointer}
+.armado .codigo .linha:hover{background:rgba(255,255,255,.05)}
+.codigo .linha:focus-visible{outline:2px solid var(--code-ok);outline-offset:-2px}
+.codigo .cm{color:var(--code-mut);font-style:italic}
+.codigo .st{color:var(--code-str)}
+.revelado .codigo .linha[data-culpada]{background:rgba(240,124,108,.13);box-shadow:inset 3px 0 0 var(--code-erro)}
+.codigo .linha.acerto{background:rgba(89,201,138,.16);box-shadow:inset 3px 0 0 var(--code-ok)}
+.codigo .linha.engano{background:rgba(240,124,108,.10)}
+.armado .codigo .linha[aria-disabled="true"]{cursor:default;opacity:.72}
+.caca .resposta{min-height:1.4em;margin-top:12px;font-weight:650}
+.caca .resposta.ok{color:var(--acc)}
+.caca .resposta.nao{color:var(--erro)}
+.caca .acoes{margin-top:8px}
+.botao{
+  display:inline-block;text-decoration:none;font-weight:700;font-size:15px;
+  border-radius:8px;padding:10px 18px;border:1px solid transparent;cursor:pointer;
+  font-family:inherit;
+}
+.botao.cheio{background:var(--acc);color:#fff}
+.botao.borda{border-color:var(--linha);color:var(--tinta);background:transparent}
+.botao.borda:hover{border-color:var(--acc)}
+.botao[aria-disabled="true"]{opacity:.5;cursor:not-allowed;pointer-events:none}
+.revelacao{
+  margin-top:18px;border:1px solid var(--linha);border-left:4px solid var(--erro);
+  border-radius:10px;background:var(--painel);padding:18px 20px;
+}
+.revelacao h3{font-size:1.05rem;margin-bottom:10px}
+.revelacao p+p{margin-top:10px}
+.revelacao .real{font-weight:650}
+.armado .revelacao{display:none}
+.caca.aberta .revelacao{display:block}
+#mostra-btn{display:none}
+.armado.caca:not(.aberta) #mostra-btn{display:inline-block}
+
+/* ---------- momento 2: cupom ---------- */
+.cupom-wrap{max-width:380px}
+.cupom{
+  background:var(--papel);color:var(--papel-tinta);
+  font-family:'Cascadia Mono','Consolas',ui-monospace,monospace;
+  font-size:13px;line-height:1.6;
+  padding:24px 22px 28px;position:relative;
+  box-shadow:0 14px 34px rgba(0,0,0,.3);
+}
+.cupom::after{
+  content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px;
+  background-image:
+    linear-gradient(135deg,var(--papel) 50%,transparent 50%),
+    linear-gradient(45deg,var(--papel) 50%,transparent 50%);
+  background-size:12px 10px;background-repeat:repeat-x;
+}
+.cupom .c{text-align:center}
+.cupom .b{font-weight:700}
+.cupom .mut{color:var(--papel-mut)}
+.cupom hr{border:none;border-top:1px dashed var(--papel-mut);margin:10px 0}
+.cupom .item{display:flex;justify-content:space-between;gap:10px}
+.cupom .item .pts{flex:1;overflow:hidden;white-space:nowrap;color:var(--papel-mut)}
+.cupom .total{display:flex;justify-content:space-between;font-weight:800;border-top:3px double var(--papel-tinta);padding-top:8px;margin-top:8px;text-transform:uppercase;font-size:12.5px}
+.codbar{
+  height:34px;margin:14px auto 6px;max-width:210px;
+  background:repeating-linear-gradient(90deg,
+    var(--papel-tinta) 0 2px, transparent 2px 5px,
+    var(--papel-tinta) 5px 6px, transparent 6px 8px,
+    var(--papel-tinta) 8px 11px, transparent 11px 15px,
+    var(--papel-tinta) 15px 16px, transparent 16px 20px);
+}
+.cupom.imprimindo .li{visibility:hidden}
+.cupom.imprimindo .li.saiu{visibility:visible}
+.pos-cupom{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.pend{color:var(--mut);font-size:14px}
+
+/* stack */
+.grupo-stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.grupo-stack h3{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.grupo-stack ul{list-style:none}
+.grupo-stack li{padding:2px 0;font-size:15px}
+
+footer{margin-top:84px;padding:20px 0 8px;border-top:1px solid var(--linha);color:var(--mut);font-size:13.5px}
+footer p+p{margin-top:6px}
+
+@media (max-width:1079px){
+  .lateral{padding-bottom:8px}
+  section+section{margin-top:64px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+}
+@media print{
+  .lateral nav,.tecla,.pular,.caca .acoes{display:none}
+  .editor{box-shadow:none}
+  .cupom{box-shadow:none}
+}
+</style>
 </head>
 <body>
-  <nav role="navigation" aria-label="Menu principal">
-    <a href="index.html" class="active" aria-current="page">Sobre</a>
-    <a href="projetos.html">Projetos</a>
-    <a href="contato.html">Contato</a>
-  </nav>
+<a class="pular" href="#conteudo"><span data-l="pt" lang="pt-BR">Pular para o conteúdo</span><span data-l="en" lang="en">Skip to content</span></a>
 
-  <main role="main">
-    <h1>Gustavo Henrick Rodrigues Da Silva</h1>
-    <p><strong>Estudante de Ciência da Computação | Desenvolvedor Júnior</strong></p>
+<div class="moldura">
 
-    <h2>Sobre Mim</h2>
-    <p id="typing-text"></p>
+  <!-- ==================== coluna fixa ==================== -->
+  <header class="lateral">
+    <div>
+      <div class="controles">
+        <button class="idioma" id="idioma" type="button" lang="en">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 12h18M12 3c2.5 2.6 2.5 15 0 18M12 3c-2.5 2.6-2.5 15 0 18" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span id="idioma-txt">EN</span>
+        </button>
+        <button class="tecla" id="tema" aria-pressed="false">tema: escuro</button>
+        <p class="so-leitor" id="aviso-idioma" role="status" aria-live="polite"></p>
+      </div>
+
+      <!-- FOTO: recorte de rosto e ombros gerado a partir de Downloads\eu.jpg em 2026-08-08.
+           Para trocar por uma foto profissional futura, basta substituir o arquivo
+           foto-gustavo.jpg nesta pasta (quadrado, mínimo 448x448). -->
+      <img class="foto" src="foto-gustavo.jpg" alt="Gustavo Henrick" width="112" height="112">
+
+      <h1>Gustavo Henrick</h1>
+      <p class="cargo" data-l="pt" lang="pt-BR">Desenvolvedor Fullstack, <strong>Node.js / TypeScript</strong></p>
+      <p class="cargo" data-l="en" lang="en">Software Engineer, <strong>Node.js / TypeScript</strong></p>
+      <p class="foco" data-l="pt" lang="pt-BR">Sistemas transacionais: dinheiro, estoque e integridade de dados que não podem errar.</p>
+      <p class="foco" data-l="en" lang="en">Transactional systems: money, inventory, and data integrity that cannot be wrong.</p>
+      <p class="tese" data-l="pt" lang="pt-BR">Teste verde não é prova. Encontro a classe de defeito que passa pelo teste e chega ao cliente.</p>
+      <p class="tese" data-l="en" lang="en">A green test is not proof. I find the class of defect that passes the test and reaches the customer.</p>
+      <p class="local" data-l="pt" lang="pt-BR">São Paulo, Brasil · UTC−3</p>
+      <p class="local" data-l="en" lang="en">São Paulo, Brazil · UTC−3</p>
+
+      <nav class="indice" id="indice">
+        <a href="#sobre"><span data-l="pt" lang="pt-BR">Sobre</span><span data-l="en" lang="en">About</span></a>
+        <a href="#projetos"><span data-l="pt" lang="pt-BR">Projetos</span><span data-l="en" lang="en">Work</span></a>
+        <a href="#caca-bug"><span data-l="pt" lang="pt-BR">Caça-bug</span><span data-l="en" lang="en">Bug hunt</span></a>
+        <a href="#stack"><span data-l="pt" lang="pt-BR">Stack</span><span data-l="en" lang="en">Stack</span></a>
+        <a href="#contato"><span data-l="pt" lang="pt-BR">Contato</span><span data-l="en" lang="en">Contact</span></a>
+      </nav>
+    </div>
+
+    <div class="canais">
+      <a class="canal-1" href="mailto:guuga.dev20@gmail.com">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2.5" y="5" width="19" height="14" rx="2.5" stroke="currentColor" stroke-width="2"/>
+          <path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>guuga.dev20@gmail.com</span>
+      </a>
+      <div class="canal-2">
+        <a href="https://github.com/eoGuuga">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.63-1.34-2.22-.25-4.555-1.11-4.555-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com/in/gustavo-henrick-dev20">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zM9.5 9.5h3.8v1.5h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76v5.69h-4v-5.05c0-1.2-.02-2.75-1.75-2.75-1.75 0-2.02 1.31-2.02 2.66v5.14h-4v-11z"/>
+          </svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== conteúdo ==================== -->
+  <main class="conteudo" id="conteudo">
+
+    <section id="sobre">
+      <p class="rotulo"><span data-l="pt" lang="pt-BR">sobre</span><span data-l="en" lang="en">about</span></p>
+      <h2 data-l="pt" lang="pt-BR">O que eu faço</h2>
+      <h2 data-l="en" lang="en">What I do</h2>
+
+      <p data-l="pt" lang="pt-BR">Construo <strong>sistemas transacionais</strong>: dinheiro, estoque e integridade
+      de dados que não podem errar. Backend em Node.js e TypeScript, com qualidade tratada
+      como parte do trabalho, não como etapa depois dele. Varejo é onde esse trabalho
+      acontece hoje; a engenharia serve a qualquer domínio onde uma transação perdida
+      custa caro.</p>
+      <p data-l="en" lang="en">I build <strong>transactional systems</strong>, where money, inventory, and data
+      integrity cannot be wrong. Backend in Node.js and TypeScript, with quality treated as
+      part of the work rather than a stage after it. Retail is where that work happens right
+      now; the engineering carries over to any domain where a lost transaction is expensive.</p>
+
+      <p data-l="pt" lang="pt-BR">No dia a dia trabalho em time: Scrum, Jira, e code review no Bitbucket antes de
+      qualquer merge. Foi ali que entendi que revisão não é formalidade. É a última chance
+      de pegar o que o teste deixou passar.</p>
+      <p data-l="en" lang="en">Day to day I work on a team: Scrum, Jira, and code review in Bitbucket before
+      anything merges. That is where I learned that review is not a formality. It is the last
+      chance to catch what the tests let through.</p>
+
+      <p data-l="pt" lang="pt-BR">A base veio de dois lados. A Formação Fullstack em Engenharia de Software da
+      Rocketseat, 181 horas entre Node, React, TypeScript, testes automatizados, Docker e
+      deploy, me deu o caminho inteiro de uma aplicação. O Bacharelado em Ciência da
+      Computação, que termino em 2027, dá o que curso nenhum entrega em 181 horas: o porquê
+      atrás da escolha.</p>
+      <p data-l="en" lang="en">The foundation came from two directions. Rocketseat's Full-Stack Software
+      Engineering program, 181 hours across Node, React, TypeScript, automated testing,
+      Docker, and deployment, gave me the whole path of an application. The Computer Science
+      degree I finish in 2027 gives what no 181-hour program can: the reasoning behind the
+      choice.</p>
+
+      <p data-l="pt" lang="pt-BR">Também construí e opero um produto próprio de ponta a ponta: arquitetura, testes,
+      infra, deploy e homologação junto a um comércio real. Autonomia diz mais que lista de
+      tecnologia.</p>
+      <p data-l="en" lang="en">I also build and run my own product end to end: architecture, tests, infrastructure,
+      deployment, and acceptance testing at a real store. Autonomy says more than a list of
+      technologies.</p>
+
+      <p data-l="pt" lang="pt-BR">A frase ali na coluna não é slogan: é critério de merge. Mais abaixo tem um
+      <a href="#caca-bug">caça-bug</a> para mostrar o que ela significa na prática.</p>
+      <p data-l="en" lang="en">The line in the sidebar is not a slogan, it is a merge criterion. There is a
+      <a href="#caca-bug">bug hunt</a> below that shows what it means in practice.</p>
+    </section>
+
+    <section id="projetos">
+      <p class="rotulo"><span data-l="pt" lang="pt-BR">projetos</span><span data-l="en" lang="en">work</span></p>
+      <h2 data-l="pt" lang="pt-BR">O que já construí</h2>
+      <h2 data-l="en" lang="en">What I have built</h2>
+
+      <article class="cartao principal">
+        <p class="origem">
+          <span data-l="pt" lang="pt-BR">projeto próprio · solo · nov/2025 até hoje</span>
+          <span data-l="en" lang="en">own product · solo · Nov 2025 to present</span>
+          <span class="selo"><span data-l="pt" lang="pt-BR">principal</span><span data-l="en" lang="en">flagship</span></span>
+        </p>
+        <h3>Unified Commerce Platform</h3>
+        <p data-l="pt" lang="pt-BR">Plataforma multi-tenant para pequenos comércios: PDV, estoque, loja e bot de
+        WhatsApp que atende e fecha pedidos. Isolamento entre lojas imposto pelo banco via
+        Row-Level Security com papel restrito espelhando produção. Esteira de integração
+        contra Postgres e Redis reais, bloqueante.</p>
+        <p data-l="en" lang="en">Multi-tenant platform for small retailers: point-of-sale, inventory, storefront,
+        and a WhatsApp agent that handles customers and closes orders. Tenant isolation is
+        enforced by the database through Row-Level Security under a restricted role that
+        mirrors production. Integration runs against real Postgres and Redis as a blocking
+        gate in the CI pipeline.</p>
+        <p class="nums">
+          <span data-l="pt" lang="pt-BR">1.104 commits · 1.404 casos de teste em 156 arquivos · homologado com um comércio real</span>
+          <span data-l="en" lang="en">1,104 commits · 1,404 test cases across 156 files · acceptance testing done at a real store</span>
+        </p>
+        <div class="ia-box">
+          <p class="ia-rotulo"><span data-l="pt" lang="pt-BR">ia aplicada a produto</span><span data-l="en" lang="en">applied ai in product</span></p>
+          <p data-l="pt" lang="pt-BR">O bot atende, valida e fecha venda com um <strong>guard determinístico</strong>
+          sobre a saída do modelo: todo valor monetário narrado pela IA é conferido contra o
+          banco antes de chegar ao cliente. Narração não verificável é descartada. Validado
+          por um harness de <strong>63 cenários</strong>, sem depender de LLM ao vivo.</p>
+          <p data-l="en" lang="en">The agent sells with a <strong>deterministic guard</strong> on the model output:
+          every monetary value it states is checked against the database before it reaches
+          the customer, and any claim the system cannot verify is dropped. Validated by a
+          <strong>63-scenario</strong> harness that never calls a live LLM.</p>
+        </div>
+        <ul class="stack-mini"><li>NestJS</li><li>TypeScript</li><li>TypeORM</li><li>PostgreSQL</li><li>Redis</li><li>Next.js</li><li>Docker</li><li>GitHub Actions</li></ul>
+      </article>
+
+      <article class="cartao">
+        <p class="origem">
+          <span data-l="pt" lang="pt-BR">Decision Group, alocado na Diebold Nixdorf</span>
+          <span data-l="en" lang="en">Decision Group, on assignment at Diebold Nixdorf</span>
+        </p>
+        <h3 data-l="pt" lang="pt-BR">De legado a microserviços, num fluxo crítico de venda</h3>
+        <h3 data-l="en" lang="en">From legacy to microservices, on a critical sale flow</h3>
+        <p data-l="pt" lang="pt-BR">Fluxo de venda escrito há mais de dez anos, em produção num grande varejista
+        nacional, refatorado e migrado para microserviços em cloud sem que a tela do
+        operador mudasse. Escrevo o plano de teste e defino critério de aceite e escopo de
+        regressão, então o que precisa ser testado é decidido antes de virar automação. A
+        automação em si construí de ponta a ponta, com editor que deixa o próprio QA criar
+        teste novo sem escrever código.</p>
+        <p data-l="en" lang="en">A sale flow written more than ten years ago, running in production at a major
+        Brazilian retailer, refactored and migrated to cloud microservices without changing
+        the screen the cashier uses. I write the test plan and set acceptance criteria and
+        regression scope, so what needs testing is decided before it becomes automation. The
+        automation itself I built end to end, including an editor that lets QA engineers
+        author new tests without writing code.</p>
+        <p class="nums">
+          <span data-l="pt" lang="pt-BR">67 fluxos automatizados · 242 testes escritos</span>
+          <span data-l="en" lang="en">67 automated flows · 242 tests written</span>
+        </p>
+        <ul class="stack-mini"><li>Python</li><li>Selenium</li><li>Node 22</li><li>TypeScript</li><li>Fastify</li><li>PostgreSQL</li><li>Redis</li><li>Docker</li><li>Jest</li></ul>
+      </article>
+
+      <article class="cartao compacto">
+        <p class="origem">
+          <span data-l="pt" lang="pt-BR">ferramenta própria · código proprietário</span>
+          <span data-l="en" lang="en">own tool · proprietary code</span>
+        </p>
+        <h3 data-l="pt" lang="pt-BR">Motor de automação de testes de UI</h3>
+        <h3 data-l="en" lang="en">UI test automation engine</h3>
+        <p data-l="pt" lang="pt-BR">Linguagem própria de cenário, camada própria de mapeamento de elementos e
+        relatórios em HTML e PDF, construído por mim para o sistema de frente de caixa
+        que testo no dia a dia.</p>
+        <p data-l="en" lang="en">A custom scenario language, a custom element-mapping layer, and reporting in HTML
+        and PDF, built for the point-of-sale system I test every day.</p>
+        <ul class="stack-mini"><li>Python</li><li>Selenium 4.41</li></ul>
+      </article>
+
+      <div class="privado">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <p data-l="pt" lang="pt-BR"><b>Parte do código é privado</b> por contrato com a contratante e o cliente.
+        O código não sai daqui; o raciocínio sai: arquitetura, decisões e trade-offs,
+        abertos em conversa. É assim que trato o que me confiam.</p>
+        <p data-l="en" lang="en"><b>Some of this code is private</b> under contract with my employer and their
+        client. The code stays where it is; the reasoning does not. Architecture, decisions,
+        and trade-offs are open in conversation. That is how I treat what people trust me with.</p>
+      </div>
+    </section>
+
+    <!-- ==================== momento 1: caça-bug ==================== -->
+    <section id="caca-bug" class="caca revelado">
+      <p class="rotulo"><span data-l="pt" lang="pt-BR">caça-bug</span><span data-l="en" lang="en">bug hunt</span></p>
+      <p class="chamada" data-l="pt" lang="pt-BR">Esse teste está verde e não testa nada. Acha o motivo.</p>
+      <p class="chamada" data-l="en" lang="en">This test suite is green and tests nothing. Find out why.</p>
+      <p class="instrucao" data-l="pt" lang="pt-BR">Clique na linha onde o problema mora. Dá para
+      navegar com <span class="mono">Tab</span> e acionar com <span class="mono">Enter</span>.
+      Erre à vontade: linha errada fica marcada. Só o acerto (ou o "me mostra") revela.</p>
+      <p class="instrucao" data-l="en" lang="en">Click the line where the problem lives. You can
+      also <span class="mono">Tab</span> to it and press <span class="mono">Enter</span>.
+      Guess as often as you like: a wrong line gets marked. Only a correct pick, or "show me",
+      reveals the answer.</p>
+
+      <div class="editor">
+        <p class="aba">
+          <span data-l="pt" lang="pt-BR">pagamentos.integration.spec.ts</span><span data-l="en" lang="en">payments.integration.spec.ts</span>
+          · <span id="badge-suite">2 passed, 2 total ✓</span>
+        </p>
+        <ol class="codigo" id="codigo">
+          <li><button class="linha" type="button">import { createApp } from '../src/app';</button></li>
+          <li><button class="linha" type="button">import { PaymentService } from '../src/payments/payment.service';</button></li>
+          <li><button class="linha" type="button"> </button></li>
+          <li><button class="linha" type="button">let service: PaymentService | undefined;</button></li>
+          <li><button class="linha" type="button"> </button></li>
+          <li><button class="linha" type="button">beforeAll(async () =&gt; {</button></li>
+          <li><button class="linha" type="button">  try {</button></li>
+          <li><button class="linha" type="button">    const app = await createApp(); <span class="cm" data-l="pt" lang="pt-BR">// lê DATABASE_URL no boot</span><span class="cm" data-l="en" lang="en">// reads DATABASE_URL at boot</span></button></li>
+          <li><button class="linha" type="button">    service = app.get(PaymentService);</button></li>
+          <li><button class="linha" type="button" data-culpada>  } catch {</button></li>
+          <li><button class="linha" type="button" data-culpada>    <span class="cm" data-l="pt" lang="pt-BR">// ambiente instável no CI, segue sem bloquear</span><span class="cm" data-l="en" lang="en">// flaky CI env, keep going</span></button></li>
+          <li><button class="linha" type="button">  }</button></li>
+          <li><button class="linha" type="button">});</button></li>
+          <li><button class="linha" type="button"> </button></li>
+          <li><button class="linha" type="button">describe(<span class="st" data-l="pt" lang="pt-BR">'PaymentService (integração)'</span><span class="st" data-l="en" lang="en">'PaymentService (integration)'</span>, () =&gt; {</button></li>
+          <li><button class="linha" type="button">  it(<span class="st" data-l="pt" lang="pt-BR">'confirma o pagamento e baixa o estoque'</span><span class="st" data-l="en" lang="en">'confirms payment and decrements stock'</span>, async () =&gt; {</button></li>
+          <li><button class="linha" type="button" data-culpada>    if (!service) return;</button></li>
+          <li><button class="linha" type="button">    const order = await service.confirm(<span class="st" data-l="pt" lang="pt-BR">'PED-TESTE'</span><span class="st" data-l="en" lang="en">'ORD-TEST'</span>);</button></li>
+          <li><button class="linha" type="button">    expect(order.status).toBe(<span class="st">'paid'</span>);</button></li>
+          <li><button class="linha" type="button">  });</button></li>
+          <li><button class="linha" type="button"> </button></li>
+          <li><button class="linha" type="button">  it(<span class="st" data-l="pt" lang="pt-BR">'rejeita confirmação duplicada'</span><span class="st" data-l="en" lang="en">'rejects duplicate confirmation'</span>, async () =&gt; {</button></li>
+          <li><button class="linha" type="button" data-culpada>    if (!service) return;</button></li>
+          <li><button class="linha" type="button">    await expect(service.confirm(<span class="st" data-l="pt" lang="pt-BR">'PED-TESTE'</span><span class="st" data-l="en" lang="en">'ORD-TEST'</span>)).rejects.toThrow();</button></li>
+          <li><button class="linha" type="button">  });</button></li>
+          <li><button class="linha" type="button">});</button></li>
+        </ol>
+      </div>
+
+      <p class="resposta" id="resposta" aria-live="polite"></p>
+      <p class="acoes"><button class="botao borda" id="mostra-btn" type="button"><span data-l="pt" lang="pt-BR">Me mostra</span><span data-l="en" lang="en">Show me</span></button></p>
+
+      <div class="revelacao" id="revelacao">
+        <h3 data-l="pt" lang="pt-BR">O que está acontecendo</h3>
+        <h3 data-l="en" lang="en">What is going on</h3>
+
+        <p data-l="pt" lang="pt-BR"><code class="mono">createApp()</code> precisa de <code class="mono">DATABASE_URL</code>.
+        Quando a variável não existe, a inicialização lança, e o <code class="mono">catch</code>
+        vazio engole a falha. <code class="mono">service</code> fica
+        <code class="mono">undefined</code>, cada teste retorna cedo no
+        <code class="mono">if (!service) return</code>, e o Jest conta os dois como
+        aprovados. Suíte verde, zero execução.</p>
+        <p data-l="en" lang="en"><code class="mono">createApp()</code> needs <code class="mono">DATABASE_URL</code>.
+        When the variable is missing, boot throws, and the empty <code class="mono">catch</code>
+        swallows it. <code class="mono">service</code> stays
+        <code class="mono">undefined</code>, both tests bail out at
+        <code class="mono">if (!service) return</code>, and Jest counts them as passing.
+        Green suite, nothing executed.</p>
+
+        <p class="real" data-l="pt" lang="pt-BR">Isso não é exercício inventado: numa suíte que eu mantinha,
+        <strong>13 de 17 conjuntos de integração reportavam sucesso sem executar nada</strong>.
+        A falha era engolida na inicialização: faltava uma variável de ambiente.</p>
+        <p class="real" data-l="en" lang="en">This is not a made-up exercise. In a suite I maintained,
+        <strong>13 of 17 integration suites reported success without executing anything</strong>.
+        The failure was swallowed at boot, and an environment variable was missing.</p>
+
+        <p data-l="pt" lang="pt-BR">Disciplina de verificação é isso: não aceitar conclusão sem controle positivo.
+        O verde só vale depois que alguém desconfia dele. A correção aqui é uma linha
+        (falha de inicialização derruba a suíte) e uma esteira que roda contra dependências
+        reais e bloqueia quando quebra.</p>
+        <p data-l="en" lang="en">That is verification discipline: never accept a conclusion without a positive
+        control. Green only counts once somebody doubts it. The fix here is one line, where a
+        boot failure fails the suite, plus a CI pipeline that runs against real dependencies
+        and blocks when it breaks.</p>
+      </div>
+    </section>
+
+    <section id="stack">
+      <p class="rotulo">stack</p>
+      <h2 data-l="pt" lang="pt-BR">Com o que eu trabalho</h2>
+      <h2 data-l="en" lang="en">What I work with</h2>
+      <div class="grupo-stack">
+        <div>
+          <h3 data-l="pt" lang="pt-BR">Linguagens</h3><h3 data-l="en" lang="en">Languages</h3>
+          <ul><li>TypeScript</li><li>JavaScript / Node.js 22</li><li>Python</li><li>SQL</li></ul>
+        </div>
+        <div>
+          <h3 data-l="pt" lang="pt-BR">Backend e web</h3><h3 data-l="en" lang="en">Backend and web</h3>
+          <ul><li>NestJS</li><li>Fastify</li><li>TypeORM</li><li>Next.js</li>
+            <li data-l="pt" lang="pt-BR">Arquitetura hexagonal</li><li data-l="en" lang="en">Hexagonal architecture</li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-l="pt" lang="pt-BR">Dados e infra</h3><h3 data-l="en" lang="en">Data and infrastructure</h3>
+          <ul><li>PostgreSQL</li><li>Redis</li><li>Docker</li>
+            <li data-l="pt" lang="pt-BR">GitHub Actions, com gate bloqueante</li><li data-l="en" lang="en">GitHub Actions, with a blocking gate</li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-l="pt" lang="pt-BR">Estratégia e automação de teste</h3><h3 data-l="en" lang="en">Test strategy and automation</h3>
+          <ul>
+            <li data-l="pt" lang="pt-BR">Plano de teste, critério de aceite, escopo de regressão</li><li data-l="en" lang="en">Test planning, acceptance criteria, regression scope</li>
+            <li data-l="pt" lang="pt-BR">Python com Selenium</li><li data-l="en" lang="en">Python with Selenium</li>
+            <li data-l="pt" lang="pt-BR">DSL própria, com camada de mapeamento de elementos</li><li data-l="en" lang="en">Custom DSL, with an element-mapping layer</li>
+            <li data-l="pt" lang="pt-BR">Integração com SSH, SQLite e SQL</li><li data-l="en" lang="en">SSH, SQLite, and SQL integration</li>
+            <li data-l="pt" lang="pt-BR">Chrome DevTools Protocol, validação em tela</li><li data-l="en" lang="en">Chrome DevTools Protocol, on-screen validation</li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-l="pt" lang="pt-BR">Teste de código</h3><h3 data-l="en" lang="en">Code testing</h3>
+          <ul>
+            <li>Jest, Vitest, Supertest</li>
+            <li>@nestjs/testing</li>
+            <li data-l="pt" lang="pt-BR">Integração contra Postgres e Redis reais</li><li data-l="en" lang="en">Integration against real Postgres and Redis</li>
+            <li data-l="pt" lang="pt-BR">Concorrência e integridade transacional</li><li data-l="en" lang="en">Concurrency and transactional integrity</li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-l="pt" lang="pt-BR">Fluxo de trabalho</h3><h3 data-l="en" lang="en">Ways of working</h3>
+          <ul>
+            <li>Scrum</li><li>Jira</li><li>Bitbucket</li>
+            <li data-l="pt" lang="pt-BR">Code review</li><li data-l="en" lang="en">Code review</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== momento 2: cupom ==================== -->
+    <section id="contato">
+      <p class="rotulo"><span data-l="pt" lang="pt-BR">cupom</span><span data-l="en" lang="en">receipt</span></p>
+      <h2 data-l="pt" lang="pt-BR">A conta da carreira, impressa</h2>
+      <h2 data-l="en" lang="en">The career receipt, printed</h2>
+
+      <div class="cupom-wrap">
+        <div class="cupom" id="cupom">
+          <p class="c b li">GUSTAVO HENRICK</p>
+          <p class="c mut li"><span data-l="pt" lang="pt-BR">Desenvolvedor Fullstack, Node/TS</span><span data-l="en" lang="en">Software Engineer, Node/TS</span></p>
+          <p class="c mut li"><span data-l="pt" lang="pt-BR">São Paulo, Brasil</span><span data-l="en" lang="en">São Paulo, Brazil</span></p>
+          <hr class="li">
+          <p class="c b li"><span data-l="pt" lang="pt-BR">CUPOM NÃO FISCAL</span><span data-l="en" lang="en">NOT A TAX RECEIPT</span></p>
+          <hr class="li">
+          <p class="item li"><span><span data-l="pt" lang="pt-BR">fluxos automatizados</span><span data-l="en" lang="en">automated flows</span></span><span class="pts"> ..................</span><span class="b">67</span></p>
+          <p class="item li"><span><span data-l="pt" lang="pt-BR">testes escritos</span><span data-l="en" lang="en">tests written</span></span><span class="pts"> ..................</span><span class="b">242</span></p>
+          <p class="item li"><span>commits</span><span class="pts"> ..................</span><span class="b"><span data-l="pt" lang="pt-BR">1.104</span><span data-l="en" lang="en">1,104</span></span></p>
+          <p class="item li"><span><span data-l="pt" lang="pt-BR">casos de teste</span><span data-l="en" lang="en">test cases</span></span><span class="pts"> ..................</span><span class="b"><span data-l="pt" lang="pt-BR">1.404</span><span data-l="en" lang="en">1,404</span></span></p>
+          <p class="item li"><span><span data-l="pt" lang="pt-BR">cenários de eval</span><span data-l="en" lang="en">eval scenarios</span></span><span class="pts"> ..................</span><span class="b">63</span></p>
+          <p class="item li"><span><span data-l="pt" lang="pt-BR">comércio homologado</span><span data-l="en" lang="en">store in acceptance</span></span><span class="pts"> ..................</span><span class="b">1</span></p>
+          <p class="total li">
+            <span><span data-l="pt" lang="pt-BR">Total</span><span data-l="en" lang="en">Total</span></span>
+            <span><span data-l="pt" lang="pt-BR">1 dev fullstack</span><span data-l="en" lang="en">1 software engineer</span></span>
+          </p>
+          <div class="codbar li" role="presentation"></div>
+          <p class="c mut li">guuga.dev20@gmail.com</p>
+          <p class="c mut li">github.com/eoGuuga</p>
+          <hr class="li">
+          <p class="c b li"><span data-l="pt" lang="pt-BR">VOLTE SEMPRE</span><span data-l="en" lang="en">COME BACK ANYTIME</span></p>
+        </div>
+
+      </div>
+
+      <div class="fecho">
+        <h3 data-l="pt" lang="pt-BR">Fim do cupom, começo da conversa</h3>
+        <h3 data-l="en" lang="en">End of receipt, start of the conversation</h3>
+        <p data-l="pt" lang="pt-BR">Se a sua esteira também não confia em verde fácil, a gente se entende. Escrevo de
+        volta no mesmo dia, e prefiro conversa técnica a formulário.</p>
+        <p data-l="en" lang="en">If your pipeline does not trust easy green either, we will get along. I reply the
+        same day, and I would rather talk shop than fill in a form.</p>
+        <div class="fecho-acoes">
+          <a class="botao cheio" href="mailto:guuga.dev20@gmail.com"><span data-l="pt" lang="pt-BR">Escrever e-mail</span><span data-l="en" lang="en">Send an email</span></a>
+          <a class="botao borda" href="https://linkedin.com/in/gustavo-henrick-dev20">LinkedIn</a>
+          <!-- GANCHO-CV cumprido em 2026-08-08: os PDFs existem e cada idioma baixa o seu.
+               Gerados a partir de 01-curriculo/*.md, uma página, links clicáveis. -->
+          <a class="botao borda" data-l="pt" lang="pt-BR" href="gustavo-henrick-curriculo.pdf" download>Currículo em PDF</a>
+          <a class="botao borda" data-l="en" lang="en" href="gustavo-henrick-resume.pdf" download>Resume in PDF</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p data-l="pt" lang="pt-BR">Os números desta página são fixos e reais. Nada aqui finge rodar ao vivo.</p>
+      <p data-l="en" lang="en">The numbers on this page are fixed and real. Nothing here pretends to run live.</p>
+      <p class="mono" data-l="pt" lang="pt-BR">Feita à mão: HTML, CSS e JS puros. Sem framework, sem fonte externa,
+      sem rastreador. Dê um view-source.</p>
+      <p class="mono" data-l="en" lang="en">Hand-written: plain HTML, CSS, and JS. No framework, no external fonts,
+      no trackers. Go ahead and view source.</p>
+    </footer>
   </main>
+</div>
 
-  <button
-    id="toggleDarkMode"
-    class="toggle-mode-btn"
-    title="Alternar modo escuro/claro"
-    aria-pressed="false"
-    aria-label="Alternar modo escuro/claro"
-  >
-    <i class="fas fa-moon" aria-hidden="true"></i>
-  </button>
+<script>
+(function(){
+  'use strict';
+  var raiz=document.documentElement;
 
-  <footer role="contentinfo">
-    <p>© 2025 Gustavo Henrick Rodrigues Da Silva</p>
-  </footer>
-
-  <script src="js/script.js"></script>
-  <script>
-    const typingText = `Sou estudante de Ciência da Computação no quarto semestre, com sólida base em linguagens como C#, C++, Node.js, JavaScript, Java, HTML e CSS. Tenho experiência prática em projetos acadêmicos envolvendo Arduino e desenvolvimento web, além de certificados em GitHub básico, Java e inteligência artificial para iniciantes.
-
-Meu Trabalho de Conclusão de Curso envolveu a criação de uma maquete com controle via Bluetooth para acender e apagar luzes, utilizando sensores de fumaça para alertas. Busco uma oportunidade para aplicar meus conhecimentos, expandir habilidades e contribuir com projetos inovadores em tecnologia.
-
-Sou motivado, dedicado e comprometido em construir uma carreira sólida na área de desenvolvimento de software, sempre aprendendo e compartilhando conhecimento.`;
-
-    const typingElement = document.getElementById('typing-text');
-    let index = 0;
-    const typingSpeed = 8; // milissegundos por letra
-
-    function type() {
-      if (index < typingText.length) {
-        if (typingText[index] === '\n') {
-          typingElement.innerHTML += '<br>';
-        } else {
-          typingElement.innerHTML += typingText[index];
-        }
-        index++;
-        setTimeout(type, typingSpeed);
-      }
+  /* ================= idioma =================
+     Português é o documento. O inglês é camada: sem JS, a página
+     fica inteira em pt-BR. A escolha do visitante persiste; sem
+     escolha salva, quem chega com navegador em português vê
+     português, e o resto do mundo vê inglês.                    */
+  var META={
+    pt:{
+      lang:'pt-BR', locale:'pt_BR', botao:'EN', botaoLang:'en',
+      rotulo:'Ver esta página em inglês', aviso:'Idioma: português',
+      title:'Gustavo Henrick, Desenvolvedor Fullstack · Node.js/TypeScript',
+      desc:'Desenvolvedor fullstack em São Paulo, com força em backend e sistemas transacionais: dinheiro, estoque e integridade que não podem errar. Teste verde não é prova, e tem um caça-bug nesta página para provar.',
+      ogDesc:'Teste verde não é prova. Tem um caça-bug nesta página: uma suíte verde que não testa nada. Acha o motivo.'
+    },
+    en:{
+      lang:'en', locale:'en_US', botao:'PT', botaoLang:'pt-BR',
+      rotulo:'View this page in Portuguese', aviso:'Language: English',
+      title:'Gustavo Henrick, Software Engineer · Node.js/TypeScript',
+      desc:'Software engineer in São Paulo, Brazil, focused on backend and transactional systems: money, inventory, and data integrity that cannot be wrong. A green test is not proof, and there is a bug hunt on this page to prove it.',
+      ogDesc:'A green test is not proof. There is a bug hunt on this page: a green suite that tests nothing. Find out why.'
     }
+  };
+  var TXT={
+    pt:{
+      tema:{escuro:'tema: escuro',claro:'tema: claro',paraClaro:'Mudar para o tema claro',paraEscuro:'Mudar para o tema escuro'},
+      badgeFinal:'2 passed, 2 total ✓ (sem executar nada)',
+      acerto:'Isso. A falha mora exatamente aí.',
+      engano:'Não é essa. Fica marcada: tenta outra ou pede "me mostra".',
+      semJulgamento:'Sem julgamento, olha onde ela mora:'
+    },
+    en:{
+      tema:{escuro:'theme: dark',claro:'theme: light',paraClaro:'Switch to the light theme',paraEscuro:'Switch to the dark theme'},
+      badgeFinal:'2 passed, 2 total ✓ (nothing executed)',
+      acerto:'That is it. The failure lives right there.',
+      engano:'Not that one. It stays marked: try another, or hit "show me".',
+      semJulgamento:'No judgement. Here is where it lives:'
+    }
+  };
 
-    document.addEventListener('DOMContentLoaded', () => {
-      type();
+  var btnIdioma=document.getElementById('idioma');
+  var avisoIdioma=document.getElementById('aviso-idioma');
+  var idioma='pt';
+  try{
+    var salvoIdioma=localStorage.getItem('idioma');
+    if(salvoIdioma==='pt'||salvoIdioma==='en'){idioma=salvoIdioma;}
+    else{idioma=(navigator.language||'pt').toLowerCase().indexOf('pt')===0?'pt':'en';}
+  }catch(e){
+    idioma=(navigator.language||'pt').toLowerCase().indexOf('pt')===0?'pt':'en';
+  }
+
+  function meta(nome,attr,valor){
+    var el=document.querySelector(nome);
+    if(el)el.setAttribute(attr,valor);
+  }
+  function aplicaIdioma(anunciar){
+    var m=META[idioma];
+    raiz.setAttribute('lang',m.lang);
+    raiz.setAttribute('data-lang',idioma);
+    document.title=m.title;
+    meta('meta[name="description"]','content',m.desc);
+    meta('meta[property="og:title"]','content',m.title);
+    meta('meta[property="og:description"]','content',m.ogDesc);
+    meta('meta[property="og:locale"]','content',m.locale);
+    meta('meta[property="og:locale:alternate"]','content',idioma==='pt'?'en_US':'pt_BR');
+    meta('meta[name="twitter:title"]','content',m.title);
+    meta('meta[name="twitter:description"]','content',m.ogDesc);
+    document.getElementById('idioma-txt').textContent=m.botao;
+    btnIdioma.setAttribute('lang',m.botaoLang);
+    btnIdioma.setAttribute('aria-label',m.rotulo);
+    btnIdioma.setAttribute('title',m.rotulo);
+    document.getElementById('indice').setAttribute('aria-label',idioma==='pt'?'Seções da página':'Page sections');
+    pintaTema();
+    if(anunciar)avisoIdioma.textContent=m.aviso;
+  }
+  btnIdioma.addEventListener('click',function(){
+    idioma=idioma==='pt'?'en':'pt';
+    try{localStorage.setItem('idioma',idioma);}catch(e){}
+    aplicaIdioma(true);
+  });
+
+  /* ================= tema ================= */
+  try{var salvo=localStorage.getItem('tema');if(salvo)raiz.setAttribute('data-theme',salvo);}catch(e){}
+  var btnTema=document.getElementById('tema');
+  var mqEscuro=matchMedia('(prefers-color-scheme: dark)');
+  function temaAtual(){
+    var a=raiz.getAttribute('data-theme');
+    return a?a:(mqEscuro.matches?'dark':'light');
+  }
+  function pintaTema(){
+    var escuro=temaAtual()==='dark';
+    var t=TXT[idioma].tema;
+    btnTema.setAttribute('aria-pressed',String(escuro));
+    btnTema.textContent=escuro?t.escuro:t.claro;
+    btnTema.title=escuro?t.paraClaro:t.paraEscuro;
+  }
+  btnTema.addEventListener('click',function(){
+    var novo=temaAtual()==='dark'?'light':'dark';
+    raiz.setAttribute('data-theme',novo);
+    try{localStorage.setItem('tema',novo);}catch(e){}
+    pintaTema();
+  });
+  if(mqEscuro.addEventListener){mqEscuro.addEventListener('change',pintaTema);}
+
+  aplicaIdioma(false);
+
+  /* ================= índice: seção ativa ================= */
+  var links=[].slice.call(document.querySelectorAll('nav.indice a'));
+  if('IntersectionObserver' in window && links.length){
+    var mapa={};
+    links.forEach(function(a){mapa[a.getAttribute('href').slice(1)]=a;});
+    var spy=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          links.forEach(function(a){a.classList.remove('ativa');});
+          var a=mapa[en.target.id];if(a)a.classList.add('ativa');
+        }
+      });
+    },{rootMargin:'-35% 0px -55% 0px'});
+    ['sobre','projetos','caca-bug','stack','contato'].forEach(function(id){
+      var s=document.getElementById(id);if(s)spy.observe(s);
     });
-  </script>
+  }
+
+  /* ---------- daqui para baixo, só com permissão de movimento ---------- */
+  var reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduz) return; /* markup já no estado final: caça-bug revelado, cupom impresso */
+
+  /* ================= momento 1: caça-bug =================
+     Errar dá feedback e marca a linha, sem revelar e sem limite.
+     Acertar revela. "Me mostra" revela a qualquer momento. Linha
+     tentada não reage de novo, e depois de revelado nada muda.   */
+  var caca=document.getElementById('caca-bug');
+  var linhas=[].slice.call(caca.querySelectorAll('.linha'));
+  var resposta=document.getElementById('resposta');
+  var mostraBtn=document.getElementById('mostra-btn');
+  var badge=document.getElementById('badge-suite');
+  caca.classList.remove('revelado');
+  caca.classList.add('armado');
+  var revelou=false;
+
+  function revela(){
+    revelou=true;
+    caca.classList.add('aberta');
+    caca.classList.add('revelado');
+    caca.classList.remove('armado');
+    badge.textContent=TXT[idioma].badgeFinal;
+    linhas.forEach(function(l){l.disabled=true;});
+    mostraBtn.style.display='none';
+  }
+  linhas.forEach(function(l){
+    l.addEventListener('click',function(){
+      if(revelou) return;
+      if(l.textContent.trim()==='') return;
+      if(l.getAttribute('aria-disabled')==='true') return;
+      if(l.hasAttribute('data-culpada')){
+        l.classList.add('acerto');
+        resposta.textContent=TXT[idioma].acerto;
+        resposta.className='resposta ok';
+        setTimeout(revela,700);
+      }else{
+        l.classList.add('engano');
+        l.setAttribute('aria-disabled','true');
+        resposta.textContent=TXT[idioma].engano;
+        resposta.className='resposta nao';
+      }
+    });
+  });
+  mostraBtn.addEventListener('click',function(){
+    if(revelou) return;
+    resposta.textContent=TXT[idioma].semJulgamento;
+    resposta.className='resposta';
+    revela();
+  });
+
+  /* ================= momento 2: cupom, máximo 2s ================= */
+  var cupom=document.getElementById('cupom');
+  var itens=[].slice.call(cupom.querySelectorAll('.li'));
+  if('IntersectionObserver' in window){
+    var imprimiu=false;
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(!en.isIntersecting || imprimiu) return;
+        imprimiu=true;io.disconnect();
+        cupom.classList.add('imprimindo');
+        var passo=Math.min(130,1900/itens.length);
+        itens.forEach(function(el,i){
+          setTimeout(function(){
+            el.classList.add('saiu');
+            if(i===itens.length-1)cupom.classList.remove('imprimindo');
+          },Math.round(i*passo));
+        });
+      });
+    },{threshold:.35});
+    io.observe(cupom);
+  }
+})();
+</script>
 </body>
 </html>
