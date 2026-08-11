@@ -158,6 +158,25 @@ nav.indice a:hover::before,nav.indice a.ativa::before{width:56px;background:var(
 
 /* Bloco de contato: e-mail como ação principal, redes com peso secundário.
    Antes eram três links sublinhados soltos num vão de espaço vazio. */
+/* isca do caça-bug: preenche o vazio da coluna entre a navegação e o
+   contato. Discreta de propósito, some junto com a nav no mobile. */
+.isca{display:none}
+@media (min-width:1080px){
+  .isca{
+    display:block;margin:26px 0;text-decoration:none;
+    border-left:2px solid var(--linha);padding-left:14px;
+  }
+}
+.isca-t{font-size:12.5px;color:var(--mut)}
+.isca-cod{
+  margin-top:8px;font-family:'Cascadia Mono','Consolas',ui-monospace,monospace;
+  font-size:11.5px;line-height:1.65;color:var(--mut);
+  white-space:pre;overflow:hidden;
+}
+.isca-l{margin-top:8px;font-family:'Cascadia Mono','Consolas',ui-monospace,monospace;font-size:12px;color:var(--acc)}
+.isca:hover{border-left-color:var(--acc)}
+.isca:hover .isca-l{text-decoration:underline}
+
 .canais{margin-top:34px}
 .canal-1{
   display:flex;align-items:center;gap:10px;text-decoration:none;
@@ -274,6 +293,10 @@ section h2{font-size:clamp(1.6rem,2.7vw,2rem);line-height:1.15;letter-spacing:-.
 .codigo .linha.acerto{background:rgba(89,201,138,.16);box-shadow:inset 3px 0 0 var(--code-ok)}
 .codigo .linha.engano{background:rgba(240,124,108,.10)}
 .armado .codigo .linha[aria-disabled="true"]{cursor:default;opacity:.72}
+/* Sem JS, ou com movimento reduzido, o caso já vem revelado e a seção é
+   leitura. A instrução de clique e o "me mostra" sairiam prometendo uma
+   interação que não vai acontecer, então só existem com o jogo no ar. */
+html:not(.jogo) .caca .instrucao,html:not(.jogo) .caca .acoes{display:none}
 .caca .resposta{min-height:1.4em;margin-top:12px;font-weight:650}
 .caca .resposta.ok{color:var(--acc)}
 .caca .resposta.nao{color:var(--erro)}
@@ -293,6 +316,7 @@ section h2{font-size:clamp(1.6rem,2.7vw,2rem);line-height:1.15;letter-spacing:-.
 }
 .revelacao h3{font-size:1.05rem;margin-bottom:10px}
 .revelacao p+p{margin-top:10px}
+.revelacao code{font-family:'Cascadia Mono','Consolas',ui-monospace,monospace;font-size:.92em}
 .revelacao .real{font-weight:650}
 .armado .revelacao{display:none}
 .caca.aberta .revelacao{display:block}
@@ -421,6 +445,17 @@ footer p+p{margin-top:6px}
         <a href="#contato"><span data-l="pt" lang="pt-BR">Contato</span><span data-l="en" lang="en">Contact</span></a>
       </nav>
     </div>
+
+    <a class="isca" href="#caca-bug">
+      <p class="isca-t"><span data-l="pt" lang="pt-BR">esse teste passa e não testa nada</span><span data-l="en" lang="en">this test passes and tests nothing</span></p>
+      <pre class="isca-cod" data-l="pt" lang="pt-BR" id="isca-pt">  } catch (err) {
+    logger.warn('stack de integração indisponível', err);
+  }</pre>
+      <pre class="isca-cod" data-l="en" lang="en" id="isca-en">  } catch (err) {
+    logger.warn('integration stack unavailable', err);
+  }</pre>
+      <p class="isca-l"><span data-l="pt" lang="pt-BR">achar o motivo ↓</span><span data-l="en" lang="en">find out why ↓</span></p>
+    </a>
 
     <div class="canais">
       <a class="canal-1" href="mailto:guuga.dev20@gmail.com">
@@ -605,36 +640,28 @@ footer p+p{margin-top:6px}
 
       <div class="editor">
         <p class="aba">
-          <span data-l="pt" lang="pt-BR">pagamentos.integration.spec.ts</span><span data-l="en" lang="en">payments.integration.spec.ts</span>
-          · <span id="badge-suite">2 passed, 2 total ✓</span>
+          <span id="aba-arq"><span data-l="pt" lang="pt-BR">pagamentos.integration.spec.ts</span><span data-l="en" lang="en">payments.integration.spec.ts</span></span>
+          · <span id="badge-suite">1 passed, 1 total ✓</span>
         </p>
         <ol class="codigo" id="codigo">
-          <li><button class="linha" type="button">import { createApp } from '../src/app';</button></li>
-          <li><button class="linha" type="button">import { PaymentService } from '../src/payments/payment.service';</button></li>
-          <li><button class="linha" type="button"> </button></li>
-          <li><button class="linha" type="button">let service: PaymentService | undefined;</button></li>
-          <li><button class="linha" type="button"> </button></li>
-          <li><button class="linha" type="button">beforeAll(async () =&gt; {</button></li>
-          <li><button class="linha" type="button">  try {</button></li>
-          <li><button class="linha" type="button">    const app = await createApp(); <span class="cm" data-l="pt" lang="pt-BR">// lê DATABASE_URL no boot</span><span class="cm" data-l="en" lang="en">// reads DATABASE_URL at boot</span></button></li>
-          <li><button class="linha" type="button">    service = app.get(PaymentService);</button></li>
-          <li><button class="linha" type="button" data-culpada>  } catch {</button></li>
-          <li><button class="linha" type="button" data-culpada>    <span class="cm" data-l="pt" lang="pt-BR">// ambiente instável no CI, segue sem bloquear</span><span class="cm" data-l="en" lang="en">// flaky CI env, keep going</span></button></li>
-          <li><button class="linha" type="button">  }</button></li>
-          <li><button class="linha" type="button">});</button></li>
-          <li><button class="linha" type="button"> </button></li>
-          <li><button class="linha" type="button">describe(<span class="st" data-l="pt" lang="pt-BR">'PaymentService (integração)'</span><span class="st" data-l="en" lang="en">'PaymentService (integration)'</span>, () =&gt; {</button></li>
-          <li><button class="linha" type="button">  it(<span class="st" data-l="pt" lang="pt-BR">'confirma o pagamento e baixa o estoque'</span><span class="st" data-l="en" lang="en">'confirms payment and decrements stock'</span>, async () =&gt; {</button></li>
-          <li><button class="linha" type="button" data-culpada>    if (!service) return;</button></li>
-          <li><button class="linha" type="button">    const order = await service.confirm(<span class="st" data-l="pt" lang="pt-BR">'PED-TESTE'</span><span class="st" data-l="en" lang="en">'ORD-TEST'</span>);</button></li>
-          <li><button class="linha" type="button">    expect(order.status).toBe(<span class="st">'paid'</span>);</button></li>
-          <li><button class="linha" type="button">  });</button></li>
-          <li><button class="linha" type="button"> </button></li>
-          <li><button class="linha" type="button">  it(<span class="st" data-l="pt" lang="pt-BR">'rejeita confirmação duplicada'</span><span class="st" data-l="en" lang="en">'rejects duplicate confirmation'</span>, async () =&gt; {</button></li>
-          <li><button class="linha" type="button" data-culpada>    if (!service) return;</button></li>
-          <li><button class="linha" type="button">    await expect(service.confirm(<span class="st" data-l="pt" lang="pt-BR">'PED-TESTE'</span><span class="st" data-l="en" lang="en">'ORD-TEST'</span>)).rejects.toThrow();</button></li>
-          <li><button class="linha" type="button">  });</button></li>
-          <li><button class="linha" type="button">});</button></li>
+          <li><button class="linha" type="button" disabled>let service: PaymentService | undefined;</button></li>
+          <li><button class="linha" type="button" disabled> </button></li>
+          <li><button class="linha" type="button" disabled>beforeAll(async () =&gt; {</button></li>
+          <li><button class="linha" type="button" disabled>  try {</button></li>
+          <li><button class="linha" type="button" disabled>    service = (await createApp()).get(PaymentService);</button></li>
+          <li><button class="linha" type="button" disabled>  } catch (err) {</button></li>
+          <li><button class="linha" type="button" disabled data-culpada>    logger.warn(<span class="st" data-l="pt" lang="pt-BR">'stack de integração indisponível'</span><span class="st" data-l="en" lang="en">'integration stack unavailable'</span>, err);</button></li>
+          <li><button class="linha" type="button" disabled>  }</button></li>
+          <li><button class="linha" type="button" disabled>});</button></li>
+          <li><button class="linha" type="button" disabled> </button></li>
+          <li><button class="linha" type="button" disabled><span class="cm" data-l="pt" lang="pt-BR">// pula o corpo quando a stack não subiu</span><span class="cm" data-l="en" lang="en">// skips the body when the stack did not come up</span></button></li>
+          <li><button class="linha" type="button" disabled><span data-l="pt" lang="pt-BR">const comServico = (fn: (s: PaymentService) =&gt; Promise&lt;void&gt;) =&gt;</span><span data-l="en" lang="en">const withService = (fn: (s: PaymentService) =&gt; Promise&lt;void&gt;) =&gt;</span></button></li>
+          <li><button class="linha" type="button" disabled data-culpada>  async () =&gt; { if (service) await fn(service); };</button></li>
+          <li><button class="linha" type="button" disabled> </button></li>
+          <li><button class="linha" type="button" disabled><span data-l="pt" lang="pt-BR">it(<span class="st">'confirma o pagamento e baixa o estoque'</span>, comServico(async (s) =&gt; {</span><span data-l="en" lang="en">it(<span class="st">'confirms payment and decrements stock'</span>, withService(async (s) =&gt; {</span></button></li>
+          <li><button class="linha" type="button" disabled><span data-l="pt" lang="pt-BR">  const pedido = await s.confirm(<span class="st">'PED-TESTE'</span>);</span><span data-l="en" lang="en">  const order = await s.confirm(<span class="st">'ORD-TEST'</span>);</span></button></li>
+          <li><button class="linha" type="button" disabled><span data-l="pt" lang="pt-BR">  expect(pedido.status).toBe(<span class="st">'paid'</span>);</span><span data-l="en" lang="en">  expect(order.status).toBe(<span class="st">'paid'</span>);</span></button></li>
+          <li><button class="linha" type="button" disabled>}));</button></li>
         </ol>
       </div>
 
@@ -645,34 +672,24 @@ footer p+p{margin-top:6px}
         <h3 data-l="pt" lang="pt-BR">O que está acontecendo</h3>
         <h3 data-l="en" lang="en">What is going on</h3>
 
-        <p data-l="pt" lang="pt-BR"><code class="mono">createApp()</code> precisa de <code class="mono">DATABASE_URL</code>.
-        Quando a variável não existe, a inicialização lança, e o <code class="mono">catch</code>
-        vazio engole a falha. <code class="mono">service</code> fica
-        <code class="mono">undefined</code>, cada teste retorna cedo no
-        <code class="mono">if (!service) return</code>, e o Jest conta os dois como
-        aprovados. Suíte verde, zero execução.</p>
-        <p data-l="en" lang="en"><code class="mono">createApp()</code> needs <code class="mono">DATABASE_URL</code>.
-        When the variable is missing, boot throws, and the empty <code class="mono">catch</code>
-        swallows it. <code class="mono">service</code> stays
-        <code class="mono">undefined</code>, both tests bail out at
-        <code class="mono">if (!service) return</code>, and Jest counts them as passing.
-        Green suite, nothing executed.</p>
+        <p data-l="pt" lang="pt-BR">Sem <code>DATABASE_URL</code>, <code>createApp()</code> lança, o
+        <code>catch</code> registra um aviso e a suíte segue. <code>comServico</code> então nunca
+        chama o corpo do teste, e caso que não executa nada é caso que passa.</p>
+        <p data-l="en" lang="en">Without <code>DATABASE_URL</code>, <code>createApp()</code> throws, the
+        <code>catch</code> logs a warning, and the suite carries on. <code>withService</code> then
+        never calls the test body, and a case that executes nothing is a case that passes.</p>
 
-        <p class="real" data-l="pt" lang="pt-BR">Isso não é exercício inventado: numa suíte que eu mantinha,
-        <strong>13 de 17 conjuntos de integração reportavam sucesso sem executar nada</strong>.
-        A falha era engolida na inicialização: faltava uma variável de ambiente.</p>
-        <p class="real" data-l="en" lang="en">This is not a made-up exercise. In a suite I maintained,
-        <strong>13 of 17 integration suites reported success without executing anything</strong>.
-        The failure was swallowed at boot, and an environment variable was missing.</p>
+        <p class="real" data-l="pt" lang="pt-BR">Não é exercício inventado: numa suíte que eu mantinha,
+        <strong>13 de 17 conjuntos de integração reportavam sucesso sem executar nada</strong>,
+        exatamente por isso.</p>
+        <p class="real" data-l="en" lang="en">This is not a made-up exercise: in a suite I maintained,
+        <strong>13 of 17 integration suites reported success without executing anything</strong>,
+        for exactly this reason.</p>
 
-        <p data-l="pt" lang="pt-BR">Disciplina de verificação é isso: não aceitar conclusão sem controle positivo.
-        O verde só vale depois que alguém desconfia dele. A correção aqui é uma linha
-        (falha de inicialização derruba a suíte) e uma esteira que roda contra dependências
-        reais e bloqueia quando quebra.</p>
-        <p data-l="en" lang="en">That is verification discipline: never accept a conclusion without a positive
-        control. Green only counts once somebody doubts it. The fix here is one line, where a
-        boot failure fails the suite, plus a CI pipeline that runs against real dependencies
-        and blocks when it breaks.</p>
+        <p data-l="pt" lang="pt-BR">Aviso em log não reprova ninguém. A correção é fail-closed: falha de
+        inicialização derruba a suíte, e a esteira roda contra Postgres e Redis reais.</p>
+        <p data-l="en" lang="en">A log warning fails nobody. The fix is fail-closed: a boot failure kills
+        the suite, and the pipeline runs against real Postgres and Redis.</p>
       </div>
     </section>
 
@@ -889,6 +906,10 @@ footer p+p{margin-top:6px}
     var el=document.querySelector(nome);
     if(el)el.setAttribute(attr,valor);
   }
+  /* Quase todo texto da página existe nos dois idiomas no markup e a troca é
+     só CSS. O que o JS escreve como texto simples nasce num idioma só, então
+     precisa se reinscrever aqui para não ficar para trás na troca. */
+  var aoTrocarIdioma=[];
   function aplicaIdioma(anunciar){
     var m=META[idioma];
     raiz.setAttribute('lang',m.lang);
@@ -907,6 +928,7 @@ footer p+p{margin-top:6px}
     btnIdioma.setAttribute('title',m.rotulo);
     document.getElementById('indice').setAttribute('aria-label',idioma==='pt'?'Seções da página':'Page sections');
     pintaTema();
+    aoTrocarIdioma.forEach(function(f){f(idioma);});
     if(anunciar)avisoIdioma.textContent=m.aviso;
   }
   btnIdioma.addEventListener('click',function(){
@@ -961,26 +983,231 @@ footer p+p{margin-top:6px}
   /* ---------- daqui para baixo, só com permissão de movimento ---------- */
   var reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduz) return; /* markup já no estado final: caça-bug revelado, cupom impresso */
+  document.documentElement.classList.add('jogo'); /* a partir daqui o caça-bug é jogável */
 
   /* ================= momento 1: caça-bug =================
+     Banco de dez casos, todos da mesma família: defeito que passa por
+     teste verde. Um é sorteado a cada carregamento. O markup estático é
+     o caso real, revelado, e serve sem JS e com movimento reduzido.
      Errar dá feedback e marca a linha, sem revelar e sem limite.
-     Acertar revela. "Me mostra" revela a qualquer momento. Linha
-     tentada não reage de novo, e depois de revelado nada muda.   */
+     Acertar revela. "Me mostra" revela a qualquer momento. Depois de
+     revelado, nada mais muda.                                        */
+  var CASOS=[
+  { vivido:true,
+    arq:{pt:"pagamentos.integration.spec.ts",en:"payments.integration.spec.ts"},
+    badge:"1 passed, 1 total ✓",
+    badgeRev:{pt:"1 passed, 1 total ✓ (sem executar nada)",en:"1 passed, 1 total ✓ (nothing executed)"},
+    culp:[6,12],
+    erro:{pt:"Não é essa. O verde nasce antes de o teste chegar ao expect.",en:"Not that one. The green is born before the test ever reaches the expect."},
+    pt:["let service: PaymentService | undefined;","","beforeAll(async () => {","  try {","    service = (await createApp()).get(PaymentService);","  } catch (err) {","    logger.warn('stack de integração indisponível', err);","  }","});","","// pula o corpo quando a stack não subiu","const comServico = (fn: (s: PaymentService) => Promise<void>) =>","  async () => { if (service) await fn(service); };","","it('confirma o pagamento e baixa o estoque', comServico(async (s) => {","  const pedido = await s.confirm('PED-TESTE');","  expect(pedido.status).toBe('paid');","}));"],
+    en:["let service: PaymentService | undefined;","","beforeAll(async () => {","  try {","    service = (await createApp()).get(PaymentService);","  } catch (err) {","    logger.warn('integration stack unavailable', err);","  }","});","","// skips the body when the stack did not come up","const withService = (fn: (s: PaymentService) => Promise<void>) =>","  async () => { if (service) await fn(service); };","","it('confirms payment and decrements stock', withService(async (s) => {","  const order = await s.confirm('ORD-TEST');","  expect(order.status).toBe('paid');","}));"],
+    rev:{
+      pt:["Sem <code>DATABASE_URL</code>, <code>createApp()</code> lança, o <code>catch</code> registra um aviso e a suíte segue. <code>comServico</code> então nunca chama o corpo do teste, e caso que não executa nada é caso que passa.",
+          "Não é exercício inventado: numa suíte que eu mantinha, <strong>13 de 17 conjuntos de integração reportavam sucesso sem executar nada</strong>, exatamente por isso.",
+          "Aviso em log não reprova ninguém. A correção é fail-closed: falha de inicialização derruba a suíte, e a esteira roda contra Postgres e Redis reais."],
+      en:["Without <code>DATABASE_URL</code>, <code>createApp()</code> throws, the <code>catch</code> logs a warning, and the suite carries on. <code>withService</code> then never calls the test body, and a case that executes nothing is a case that passes.",
+          "This is not a made-up exercise: in a suite I maintained, <strong>13 of 17 integration suites reported success without executing anything</strong>, for exactly this reason.",
+          "A log warning fails nobody. The fix is fail-closed: a boot failure kills the suite, and the pipeline runs against real Postgres and Redis."]}
+  },
+  { arq:{pt:"notificacoes.spec.ts",en:"notifications.spec.ts"},
+    badge:"1 passed, 1 total ✓",
+    badgeRev:{pt:"1 passed, 1 total ✓ (a asserção rodou fora do caso)",en:"1 passed, 1 total ✓ (the assertion ran outside the case)"},
+    culp:[3],
+    erro:{pt:"Não é essa. Pergunte quando cada linha executa, não se ela está correta.",en:"Not that one. Ask when each line runs, not whether it is correct."},
+    pt:["it('envia a confirmação após o pagamento', async () => {","  const fila = await enfileirarConfirmacao('PED-TESTE');","","  fila.onEnviado((envio) => {","    expect(envio.entregue).toBe(true);","    expect(envio.destinatario).toBe(cliente.email);","  });","});"],
+    en:["it('sends the confirmation after payment', async () => {","  const queue = await enqueueConfirmation('ORD-TEST');","","  queue.onSent((delivery) => {","    expect(delivery.received).toBe(true);","    expect(delivery.to).toBe(customer.email);","  });","});"],
+    rev:{
+      pt:["O <code>await</code> da segunda linha espera o enfileiramento, não o envio.",
+          "<code>onEnviado</code> dispara depois que o teste já terminou, então as asserções rodam fora do caso: se falharem, falham no vazio.",
+          "A correção é esperar o evento de verdade, transformando <code>onEnviado</code> numa promessa e dando <code>await</code> nela."],
+      en:["The <code>await</code> on the second line waits for the enqueue, not for the delivery.",
+          "<code>onSent</code> fires after the test has already finished, so the assertions run outside the case: when they fail, they fail into the void.",
+          "The fix is to actually wait for the event, turning <code>onSent</code> into a promise and awaiting it."]}
+  },
+  { arq:{pt:"frete.spec.ts",en:"shipping.spec.ts"},
+    badge:"1 passed, 1 total ✓",
+    badgeRev:{pt:"1 passed, 1 total ✓ (validando o próprio mock)",en:"1 passed, 1 total ✓ (validating its own mock)"},
+    culp:[6],
+    erro:{pt:"Não é essa. Confira o que de fato roda quando o teste chama a função.",en:"Not that one. Check what actually runs when the test calls the function."},
+    pt:["import { calcularFrete, distanciaKm } from '../src/entrega';","","// isola a chamada de geolocalização, que é externa","jest.mock('../src/entrega', () => ({","  ...jest.requireActual('../src/entrega'),","  distanciaKm: jest.fn(() => 12),","  calcularFrete: jest.fn(() => 25),","}));","","it('cobra a tarifa da zona 1 dentro da capital', () => {","  expect(calcularFrete('01000-000')).toBe(25);","});"],
+    en:["import { calculateShipping, distanceKm } from '../src/delivery';","","// isolates the geolocation call, which is external","jest.mock('../src/delivery', () => ({","  ...jest.requireActual('../src/delivery'),","  distanceKm: jest.fn(() => 12),","  calculateShipping: jest.fn(() => 25),","}));","","it('charges the zone 1 rate inside the city', () => {","  expect(calculateShipping('10001')).toBe(25);","});"],
+    rev:{
+      pt:["A fábrica do mock devolve o módulo inteiro, e alguém acrescentou <code>calcularFrete</code> a ela junto com a dependência que se queria isolar.",
+          "A asserção compara o retorno do mock com o número que o próprio mock define, e a implementação real nunca executa.",
+          "Mock serve para o que a unidade consome, nunca para a unidade."],
+      en:["The mock factory returns the whole module, and somebody added <code>calculateShipping</code> to it alongside the dependency they meant to isolate.",
+          "The assertion compares the mock's return value with the number the mock itself defines, and the real implementation never runs.",
+          "Mocks are for what the unit consumes, never for the unit."]}
+  },
+  { arq:{pt:"cupons.spec.ts",en:"coupons.spec.ts"},
+    badge:"1 passed, 1 total ✓",
+    badgeRev:{pt:"1 passed, 1 total ✓ (verdadeiro por vacuidade)",en:"1 passed, 1 total ✓ (vacuously true)"},
+    culp:[5],
+    erro:{pt:"Não é essa. Pense no que a asserção devolve se a lista chegar vazia.",en:"Not that one. Think about what the assertion returns if the list arrives empty."},
+    pt:["it('não lista cupom expirado', async () => {","  await semear([cupomAtivo, cupomExpirado]);","","  const ativos = await listarCupons({ apenasAtivos: true });","","  expect(ativos.every((c) => c.validade >= hoje())).toBe(true);","});"],
+    en:["it('does not list expired coupons', async () => {","  await seed([activeCoupon, expiredCoupon]);","","  const active = await listCoupons({ activeOnly: true });","","  expect(active.every((c) => c.validUntil >= today())).toBe(true);","});"],
+    rev:{
+      pt:["<code>every</code> devolve <code>true</code> para lista vazia.",
+          "Se <code>listarCupons</code> quebrar e voltar sem nada, a asserção passa igualzinho a como passaria com o filtro perfeito, e a semeadura acima só dá a impressão de controle.",
+          "A correção é exigir presença antes de exigir ausência: afirmar que o cupom ativo veio, e só então que o expirado ficou de fora."],
+      en:["<code>every</code> returns <code>true</code> for an empty array.",
+          "If <code>listCoupons</code> breaks and comes back with nothing, the assertion passes exactly as it would with a perfect filter, and the seeding above only creates the impression of control.",
+          "The fix is to demand presence before demanding absence: assert the active coupon came back, and only then that the expired one stayed out."]}
+  },
+  { arq:{pt:"pagamentos.spec.ts",en:"payments.spec.ts"},
+    badge:"1 passed, 1 total ✓",
+    badgeRev:{pt:"1 passed, 1 total ✓ (o veredito chegou tarde)",en:"1 passed, 1 total ✓ (the verdict arrived too late)"},
+    culp:[3],
+    erro:{pt:"Não é essa. Repare no que o teste devolve para o Jest antes de terminar.",en:"Not that one. Look at what the test hands back to Jest before it ends."},
+    pt:["it('rejeita confirmação duplicada', async () => {","  const pedido = await pedidoPago('PED-TESTE');","","  expect(confirmar(pedido)).rejects.toThrow(PagamentoDuplicado);","});"],
+    en:["it('rejects duplicate confirmation', async () => {","  const order = await paidOrder('ORD-TEST');","","  expect(confirm(order)).rejects.toThrow(DuplicatePayment);","});"],
+    rev:{
+      pt:["O <code>await</code> da linha de cima cobre a criação do pedido, não a asserção.",
+          "<code>rejects</code> devolve uma promessa que ninguém espera: o teste retorna antes dela resolver, e o Jest já contou o caso como aprovado.",
+          "Passaria até se <code>confirmar</code> aceitasse a duplicata sem lançar."],
+      en:["The <code>await</code> on the line above covers creating the order, not the assertion.",
+          "<code>rejects</code> returns a promise nobody waits for: the test returns before it settles, and Jest has already counted the case as passing.",
+          "It would pass even if <code>confirm</code> accepted the duplicate without throwing."]}
+  },
+  { arq:{pt:"pedidos.integration.spec.ts",en:"orders.integration.spec.ts"},
+    badge:"1 passed, 1 total ✓",
+    badgeRev:{pt:"1 passed, 1 total ✓ (lendo outro schema)",en:"1 passed, 1 total ✓ (reading another schema)"},
+    culp:[1],
+    erro:{pt:"Não é essa. Compare o caminho de escrita com o de leitura.",en:"Not that one. Compare the write path with the read path."},
+    pt:["const semeador = await pool.connect();","const leitor = await pool.connect();","","beforeAll(async () => {","  await semeador.query('set search_path to vendas');","  await semeador.query('insert into pedidos (id) values ($1)', [pedidoDeHoje]);","});","","it('traz apenas pedidos do dia', async () => {","  const { rows } = await leitor.query('select * from pedidos');","  expect(rows.filter((p) => !ehDeHoje(p))).toHaveLength(0);","});"],
+    en:["const seeder = await pool.connect();","const reader = await pool.connect();","","beforeAll(async () => {","  await seeder.query('set search_path to sales');","  await seeder.query('insert into orders (id) values ($1)', [todaysOrder]);","});","","it('returns only orders from today', async () => {","  const { rows } = await reader.query('select * from orders');","  expect(rows.filter((o) => !isFromToday(o))).toHaveLength(0);","});"],
+    rev:{
+      pt:["<code>search_path</code> vale por conexão, e só o semeador rodou o <code>set</code>.",
+          "O leitor é outra conexão do pool e continua no schema padrão, onde a tabela está vazia: o filtro sobre o vazio dá zero, e a asserção de ausência aceita esse zero como prova.",
+          "A correção é ler pela mesma conexão que escreve, ou fixar o <code>search_path</code> na configuração do pool."],
+      en:["<code>search_path</code> is per connection, and only the seeder ran the <code>set</code>.",
+          "The reader is a different connection from the pool and stays on the default schema, where the table is empty: the filter over nothing yields zero, and the absence assertion takes that zero as proof.",
+          "The fix is to read on the same connection that writes, or to pin <code>search_path</code> in the pool configuration."]}
+  },
+  { arq:{pt:"pedidos.integration.spec.ts",en:"orders.integration.spec.ts"},
+    badge:"1 passed, 1 total ✓",
+    badgeRev:{pt:"1 passed, 1 total ✓ (gravando num Map)",en:"1 passed, 1 total ✓ (persisting into a Map)"},
+    culp:[4,7],
+    erro:{pt:"Não é essa. Descubra contra o que este spec rodou no CI.",en:"Not that one. Work out what this spec actually ran against in CI."},
+    pt:["// src/infra/repositorio.ts","export const criarRepositorio = () =>","  process.env.DATABASE_URL","    ? repositorioPostgres(process.env.DATABASE_URL)","    : repositorioEmMemoria(); // conveniência para os testes de unidade","","// pedidos.integration.spec.ts","const repo = criarRepositorio();","","it('persiste o pedido confirmado', async () => {","  await confirmarPedido('PED-TESTE', repo);","  expect(await repo.buscar('PED-TESTE')).toBeDefined();","});"],
+    en:["// src/infra/repository.ts","export const createRepository = () =>","  process.env.DATABASE_URL","    ? postgresRepository(process.env.DATABASE_URL)","    : inMemoryRepository(); // convenience for the unit tests","","// orders.integration.spec.ts","const repo = createRepository();","","it('persists the confirmed order', async () => {","  await confirmOrder('ORD-TEST', repo);","  expect(await repo.find('ORD-TEST')).toBeDefined();","});"],
+    rev:{
+      pt:["A conveniência é legítima no teste de unidade e desastrosa aqui: este arquivo é um spec de integração.",
+          "Sem <code>DATABASE_URL</code>, ele grava e lê do mesmo Map, fica verde, e migração quebrada ou coluna renomeada nunca o alcançam.",
+          "É o defeito da minha suíte das 13 de 17 com outra roupa, e a correção é a mesma: em teste de integração, variável faltando derruba a suíte."],
+      en:["The convenience is legitimate in a unit test and disastrous here: this file is an integration spec.",
+          "Without <code>DATABASE_URL</code> it writes to and reads from the same Map, stays green, and a broken migration or a renamed column never reaches it.",
+          "It is my 13-of-17 defect wearing different clothes, and the fix is the same: in an integration test, a missing variable kills the suite."]}
+  },
+  { arq:{pt:"rls.integration.spec.ts",en:"rls.integration.spec.ts"},
+    badge:"1 passed, 1 total ✓",
+    badgeRev:{pt:"1 passed, 1 total ✓ (a política nunca foi exercitada)",en:"1 passed, 1 total ✓ (the policy was never exercised)"},
+    culp:[7],
+    erro:{pt:"Não é essa. Pergunte o que aconteceria se a política fosse removida.",en:"Not that one. Ask what would happen if the policy were dropped."},
+    pt:["beforeAll(async () => {","  await semear([pedidoDaLojaA, pedidoDaLojaB]);","});","","it('a loja A enxerga apenas os próprios pedidos', async () => {","  await db.query(comoLoja('loja-a'));","","  const { rows } = await db.query('select * from pedidos where loja = $1', ['loja-a']);","","  expect(rows).toHaveLength(1);","});"],
+    en:["beforeAll(async () => {","  await seed([storeAOrder, storeBOrder]);","});","","it('store A only sees its own orders', async () => {","  await db.query(asStore('store-a'));","","  const { rows } = await db.query('select * from orders where store = $1', ['store-a']);","","  expect(rows).toHaveLength(1);","});"],
+    rev:{
+      pt:["O <code>where loja = $1</code> já filtra exatamente o que a política de Row-Level Security deveria filtrar.",
+          "O teste passa com a política ligada, desligada ou inexistente, porque nunca pede nada que ela precisasse barrar.",
+          "Para provar isolamento, a consulta tem que ser ampla, <code>select * from pedidos</code>, e a asserção é que só a loja A volta."],
+      en:["The <code>where store = $1</code> already filters exactly what the Row-Level Security policy was supposed to filter.",
+          "The test passes with the policy enabled, disabled, or absent, because it never asks for anything the rule would have to block.",
+          "To prove isolation the query has to be wide open, <code>select * from orders</code>, and the assertion is that only store A comes back."]}
+  },
+  { arq:{pt:"resumo.spec.tsx",en:"summary.spec.tsx"},
+    badge:"1 passed, 1 total ✓",
+    badgeRev:{pt:"1 passed, 1 total ✓ (incapaz de falhar)",en:"1 passed, 1 total ✓ (unable to fail)"},
+    culp:[2],
+    erro:{pt:"Não é essa. Leia o comando que o CI executa antes de estudar o teste.",en:"Not that one. Read the command CI runs before you study the test."},
+    pt:["// package.json","\"scripts\": {","  \"test:ci\": \"jest --ci --runInBand -u --coverage\"","}","","// resumo.spec.tsx","it('renderiza o resumo do pedido', () => {","  expect(renderizarResumo(pedido)).toMatchSnapshot();","});"],
+    en:["// package.json","\"scripts\": {","  \"test:ci\": \"jest --ci --runInBand -u --coverage\"","}","","// summary.spec.tsx","it('renders the order summary', () => {","  expect(renderSummary(order)).toMatchSnapshot();","});"],
+    rev:{
+      pt:["O <code>-u</code> no meio das flags é <code>--updateSnapshot</code>.",
+          "Divergência de snapshot deixa de reprovar: o arquivo é reescrito e a suíte segue verde, então o teste compara a saída com o que quer que ela tenha sido na última execução, inclusive quando a última já estava errada.",
+          "Teste incapaz de falhar é decoração."],
+      en:["The <code>-u</code> tucked among the flags is <code>--updateSnapshot</code>.",
+          "A snapshot mismatch stops failing anything: the file is rewritten and the suite stays green, so the test compares the output against whatever it happened to be last run, including when last run was already wrong.",
+          "A test that cannot fail is decoration."]}
+  },
+  { arq:{pt:"clientes.integration.spec.ts",en:"customers.integration.spec.ts"},
+    badge:"2 passed, 2 total ✓",
+    badgeRev:{pt:"2 passed, 2 total ✓ (aprovado por resíduo)",en:"2 passed, 2 total ✓ (passing on leftovers)"},
+    culp:[1],
+    erro:{pt:"Não é essa. Rode o segundo teste sozinho, de cabeça, e veja o que sobra.",en:"Not that one. Run the second test alone in your head and see what is left over."},
+    pt:["afterEach(async () => {","  await repo.limparCache();","});","","it('cadastra o cliente', async () => {","  await cadastrarCliente({ documento: '111', nome: 'Acme' });","  expect(await buscarPorDocumento('111')).toBeDefined();","});","","it('importa clientes do arquivo', async () => {","  await importarClientes('clientes.csv'); // o arquivo contém o documento 111","  expect(await buscarPorDocumento('111')).toBeDefined();","});"],
+    en:["afterEach(async () => {","  await repo.clearCache();","});","","it('registers the customer', async () => {","  await registerCustomer({ taxId: '111', name: 'Acme' });","  expect(await findByTaxId('111')).toBeDefined();","});","","it('imports customers from the file', async () => {","  await importCustomers('customers.csv'); // the file carries tax id 111","  expect(await findByTaxId('111')).toBeDefined();","});"],
+    rev:{
+      pt:["<code>limparCache</code> esvazia o cache, não a tabela: o cliente do primeiro teste continua no banco.",
+          "O segundo encontra esse resíduo e fica verde mesmo que a importação não insira uma linha sequer.",
+          "O sintoma clássico é rodar o segundo sozinho e vê-lo falhar na hora. A correção é truncar ou transacionar o estado a cada teste."],
+      en:["<code>clearCache</code> empties the cache, not the table: the customer from the first test is still in the database.",
+          "The second one finds that leftover and stays green even if the import inserts nothing at all.",
+          "The classic symptom is running the second test alone and watching it fail instantly. The fix is to truncate or wrap state per test."]}
+  }];
+
   var caca=document.getElementById('caca-bug');
-  var linhas=[].slice.call(caca.querySelectorAll('.linha'));
   var resposta=document.getElementById('resposta');
   var mostraBtn=document.getElementById('mostra-btn');
   var badge=document.getElementById('badge-suite');
+  var revelacaoEl=document.getElementById('revelacao');
+
+  function escapa(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function colorir(s){
+    var e=escapa(s), i=e.indexOf('//');
+    var corpo=i>=0?e.slice(0,i):e, com=i>=0?e.slice(i):'';
+    corpo=corpo.replace(/'[^']*'/g,function(m){return '<span class="st">'+m+'</span>'});
+    return corpo+(com?'<span class="cm">'+com+'</span>':'');
+  }
+  function parIdioma(pt,en){
+    return pt===en?colorir(pt):'<span data-l="pt" lang="pt-BR">'+colorir(pt)+'</span><span data-l="en" lang="en">'+colorir(en)+'</span>';
+  }
+  function montaCaso(c){
+    var out='';
+    for(var i=0;i<c.pt.length;i++){
+      out+='<li><button class="linha" type="button"'+(c.culp.indexOf(i)>=0?' data-culpada':'')+'>'
+         + parIdioma(c.pt[i]||' ',c.en[i]||' ')+'</button></li>';
+    }
+    document.getElementById('codigo').innerHTML=out;
+    document.getElementById('aba-arq').innerHTML=
+      '<span data-l="pt" lang="pt-BR">'+c.arq.pt+'</span><span data-l="en" lang="en">'+c.arq.en+'</span>';
+    badge.textContent=c.badge;
+    var h='<h3 data-l="pt" lang="pt-BR">O que está acontecendo</h3><h3 data-l="en" lang="en">What is going on</h3>';
+    c.rev.pt.forEach(function(p,i){h+='<p'+(c.vivido&&i===1?' class="real"':'')+' data-l="pt" lang="pt-BR">'+p+'</p>';});
+    c.rev.en.forEach(function(p,i){h+='<p'+(c.vivido&&i===1?' class="real"':'')+' data-l="en" lang="en">'+p+'</p>';});
+    revelacaoEl.innerHTML=h;
+    /* isca: três linhas com conteúdo em volta da primeira culpada */
+    function trecho(ls){
+      var ini=Math.max(0,c.culp[0]-1), out=[];
+      for(var i=ini;i<ls.length&&out.length<3;i++){if(ls[i].trim()!=='')out.push(ls[i]);}
+      return out.join('\n');
+    }
+    document.getElementById('isca-pt').textContent=trecho(c.pt);
+    document.getElementById('isca-en').textContent=trecho(c.en);
+  }
+
+  var caso=CASOS[Math.floor(Math.random()*CASOS.length)];
+  montaCaso(caso);
+  var linhas=[].slice.call(caca.querySelectorAll('.linha'));
   caca.classList.remove('revelado');
   caca.classList.add('armado');
-  var revelou=false;
+  var revelou=false, respostaChave='';
+
+  /* badge revelado e resposta são as únicas frases do caça-bug que o JS
+     escreve num idioma só. Reescreve as duas na troca, a partir do estado
+     do jogo, para não sobrar português na página em inglês. */
+  aoTrocarIdioma.push(function(lang){
+    badge.textContent=revelou?caso.badgeRev[lang]:caso.badge;
+    if(respostaChave==='erro')resposta.textContent=caso.erro[lang];
+    else if(respostaChave==='acerto')resposta.textContent=TXT[lang].acerto;
+    else if(respostaChave==='mostra')resposta.textContent=TXT[lang].semJulgamento;
+  });
 
   function revela(){
     revelou=true;
     caca.classList.add('aberta');
     caca.classList.add('revelado');
     caca.classList.remove('armado');
-    badge.textContent=TXT[idioma].badgeFinal;
+    badge.textContent=caso.badgeRev[idioma];
     linhas.forEach(function(l){l.disabled=true;});
     mostraBtn.style.display='none';
   }
@@ -991,19 +1218,22 @@ footer p+p{margin-top:6px}
       if(l.getAttribute('aria-disabled')==='true') return;
       if(l.hasAttribute('data-culpada')){
         l.classList.add('acerto');
+        respostaChave='acerto';
         resposta.textContent=TXT[idioma].acerto;
         resposta.className='resposta ok';
         setTimeout(revela,700);
       }else{
         l.classList.add('engano');
         l.setAttribute('aria-disabled','true');
-        resposta.textContent=TXT[idioma].engano;
+        respostaChave='erro';
+        resposta.textContent=caso.erro[idioma];
         resposta.className='resposta nao';
       }
     });
   });
   mostraBtn.addEventListener('click',function(){
     if(revelou) return;
+    respostaChave='mostra';
     resposta.textContent=TXT[idioma].semJulgamento;
     resposta.className='resposta';
     revela();
