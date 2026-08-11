@@ -449,11 +449,11 @@ footer p+p{margin-top:6px}
     <a class="isca" href="#caca-bug">
       <p class="isca-t"><span data-l="pt" lang="pt-BR">esse teste passa e não testa nada</span><span data-l="en" lang="en">this test passes and tests nothing</span></p>
       <pre class="isca-cod" data-l="pt" lang="pt-BR" id="isca-pt">  } catch (err) {
-    logger.warn('stack de integração indisponível', err);
-  }</pre>
+    if (!process.env.CI) throw err;
+    logger.warn('stack de integração indisponível', err);</pre>
       <pre class="isca-cod" data-l="en" lang="en" id="isca-en">  } catch (err) {
-    logger.warn('integration stack unavailable', err);
-  }</pre>
+    if (!process.env.CI) throw err;
+    logger.warn('integration stack unavailable', err);</pre>
       <p class="isca-l"><span data-l="pt" lang="pt-BR">achar o motivo ↓</span><span data-l="en" lang="en">find out why ↓</span></p>
     </a>
 
@@ -650,7 +650,8 @@ footer p+p{margin-top:6px}
           <li><button class="linha" type="button" disabled>  try {</button></li>
           <li><button class="linha" type="button" disabled>    service = (await createApp()).get(PaymentService);</button></li>
           <li><button class="linha" type="button" disabled>  } catch (err) {</button></li>
-          <li><button class="linha" type="button" disabled data-culpada>    logger.warn(<span class="st" data-l="pt" lang="pt-BR">'stack de integração indisponível'</span><span class="st" data-l="en" lang="en">'integration stack unavailable'</span>, err);</button></li>
+          <li><button class="linha" type="button" disabled data-culpada>    if (!process.env.CI) throw err;</button></li>
+          <li><button class="linha" type="button" disabled>    logger.warn(<span class="st" data-l="pt" lang="pt-BR">'stack de integração indisponível'</span><span class="st" data-l="en" lang="en">'integration stack unavailable'</span>, err);</button></li>
           <li><button class="linha" type="button" disabled>  }</button></li>
           <li><button class="linha" type="button" disabled>});</button></li>
           <li><button class="linha" type="button" disabled> </button></li>
@@ -672,12 +673,15 @@ footer p+p{margin-top:6px}
         <h3 data-l="pt" lang="pt-BR">O que está acontecendo</h3>
         <h3 data-l="en" lang="en">What is going on</h3>
 
-        <p data-l="pt" lang="pt-BR">Sem <code>DATABASE_URL</code>, <code>createApp()</code> lança, o
-        <code>catch</code> registra um aviso e a suíte segue. <code>comServico</code> então nunca
-        chama o corpo do teste, e caso que não executa nada é caso que passa.</p>
-        <p data-l="en" lang="en">Without <code>DATABASE_URL</code>, <code>createApp()</code> throws, the
-        <code>catch</code> logs a warning, and the suite carries on. <code>withService</code> then
-        never calls the test body, and a case that executes nothing is a case that passes.</p>
+        <p data-l="pt" lang="pt-BR">Sem <code>DATABASE_URL</code>, <code>createApp()</code> lança, e a linha
+        de aparência mais responsável é a que faz o estrago: o <code>catch</code> relança na sua máquina
+        e engole no CI, que é justamente onde o resultado conta. Com <code>service</code> indefinido,
+        <code>comServico</code> pula o corpo do teste, e caso que não executa nada é caso que passa.</p>
+        <p data-l="en" lang="en">Without <code>DATABASE_URL</code>, <code>createApp()</code> throws, and the
+        most responsible-looking line is the one doing the damage: the <code>catch</code> rethrows on your
+        machine and swallows on CI, which is exactly where the result counts. With <code>service</code>
+        undefined, <code>withService</code> skips the test body, and a case that executes nothing is a
+        case that passes.</p>
 
         <p class="real" data-l="pt" lang="pt-BR">Não é exercício inventado: numa suíte que eu mantinha,
         <strong>13 de 17 conjuntos de integração reportavam sucesso sem executar nada</strong>,
@@ -687,9 +691,10 @@ footer p+p{margin-top:6px}
         for exactly this reason.</p>
 
         <p data-l="pt" lang="pt-BR">Aviso em log não reprova ninguém. A correção é fail-closed: falha de
-        inicialização derruba a suíte, e a esteira roda contra Postgres e Redis reais.</p>
+        inicialização derruba a suíte em qualquer ambiente, e a esteira roda contra Postgres e Redis
+        reais.</p>
         <p data-l="en" lang="en">A log warning fails nobody. The fix is fail-closed: a boot failure kills
-        the suite, and the pipeline runs against real Postgres and Redis.</p>
+        the suite in every environment, and the pipeline runs against real Postgres and Redis.</p>
       </div>
     </section>
 
@@ -997,32 +1002,32 @@ footer p+p{margin-top:6px}
     arq:{pt:"pagamentos.integration.spec.ts",en:"payments.integration.spec.ts"},
     badge:"1 passed, 1 total ✓",
     badgeRev:{pt:"1 passed, 1 total ✓ (sem executar nada)",en:"1 passed, 1 total ✓ (nothing executed)"},
-    culp:[6,12],
+    culp:[6,13],
     erro:{pt:"Não é essa. O verde nasce antes de o teste chegar ao expect.",en:"Not that one. The green is born before the test ever reaches the expect."},
-    pt:["let service: PaymentService | undefined;","","beforeAll(async () => {","  try {","    service = (await createApp()).get(PaymentService);","  } catch (err) {","    logger.warn('stack de integração indisponível', err);","  }","});","","// pula o corpo quando a stack não subiu","const comServico = (fn: (s: PaymentService) => Promise<void>) =>","  async () => { if (service) await fn(service); };","","it('confirma o pagamento e baixa o estoque', comServico(async (s) => {","  const pedido = await s.confirm('PED-TESTE');","  expect(pedido.status).toBe('paid');","}));"],
-    en:["let service: PaymentService | undefined;","","beforeAll(async () => {","  try {","    service = (await createApp()).get(PaymentService);","  } catch (err) {","    logger.warn('integration stack unavailable', err);","  }","});","","// skips the body when the stack did not come up","const withService = (fn: (s: PaymentService) => Promise<void>) =>","  async () => { if (service) await fn(service); };","","it('confirms payment and decrements stock', withService(async (s) => {","  const order = await s.confirm('ORD-TEST');","  expect(order.status).toBe('paid');","}));"],
+    pt:["let service: PaymentService | undefined;","","beforeAll(async () => {","  try {","    service = (await createApp()).get(PaymentService);","  } catch (err) {","    if (!process.env.CI) throw err;","    logger.warn('stack de integração indisponível', err);","  }","});","","// pula o corpo quando a stack não subiu","const comServico = (fn: (s: PaymentService) => Promise<void>) =>","  async () => { if (service) await fn(service); };","","it('confirma o pagamento e baixa o estoque', comServico(async (s) => {","  const pedido = await s.confirm('PED-TESTE');","  expect(pedido.status).toBe('paid');","}));"],
+    en:["let service: PaymentService | undefined;","","beforeAll(async () => {","  try {","    service = (await createApp()).get(PaymentService);","  } catch (err) {","    if (!process.env.CI) throw err;","    logger.warn('integration stack unavailable', err);","  }","});","","// skips the body when the stack did not come up","const withService = (fn: (s: PaymentService) => Promise<void>) =>","  async () => { if (service) await fn(service); };","","it('confirms payment and decrements stock', withService(async (s) => {","  const order = await s.confirm('ORD-TEST');","  expect(order.status).toBe('paid');","}));"],
     rev:{
-      pt:["Sem <code>DATABASE_URL</code>, <code>createApp()</code> lança, o <code>catch</code> registra um aviso e a suíte segue. <code>comServico</code> então nunca chama o corpo do teste, e caso que não executa nada é caso que passa.",
+      pt:["Sem <code>DATABASE_URL</code>, <code>createApp()</code> lança, e a linha de aparência mais responsável é a que faz o estrago: o <code>catch</code> relança na sua máquina e engole no CI, que é justamente onde o resultado conta. Com <code>service</code> indefinido, <code>comServico</code> pula o corpo do teste, e caso que não executa nada é caso que passa.",
           "Não é exercício inventado: numa suíte que eu mantinha, <strong>13 de 17 conjuntos de integração reportavam sucesso sem executar nada</strong>, exatamente por isso.",
-          "Aviso em log não reprova ninguém. A correção é fail-closed: falha de inicialização derruba a suíte, e a esteira roda contra Postgres e Redis reais."],
-      en:["Without <code>DATABASE_URL</code>, <code>createApp()</code> throws, the <code>catch</code> logs a warning, and the suite carries on. <code>withService</code> then never calls the test body, and a case that executes nothing is a case that passes.",
+          "Aviso em log não reprova ninguém. A correção é fail-closed: falha de inicialização derruba a suíte em qualquer ambiente, e a esteira roda contra Postgres e Redis reais."],
+      en:["Without <code>DATABASE_URL</code>, <code>createApp()</code> throws, and the most responsible-looking line is the one doing the damage: the <code>catch</code> rethrows on your machine and swallows on CI, which is exactly where the result counts. With <code>service</code> undefined, <code>withService</code> skips the test body, and a case that executes nothing is a case that passes.",
           "This is not a made-up exercise: in a suite I maintained, <strong>13 of 17 integration suites reported success without executing anything</strong>, for exactly this reason.",
-          "A log warning fails nobody. The fix is fail-closed: a boot failure kills the suite, and the pipeline runs against real Postgres and Redis."]}
+          "A log warning fails nobody. The fix is fail-closed: a boot failure kills the suite in every environment, and the pipeline runs against real Postgres and Redis."]}
   },
   { arq:{pt:"notificacoes.spec.ts",en:"notifications.spec.ts"},
     badge:"1 passed, 1 total ✓",
-    badgeRev:{pt:"1 passed, 1 total ✓ (a asserção rodou fora do caso)",en:"1 passed, 1 total ✓ (the assertion ran outside the case)"},
-    culp:[3],
-    erro:{pt:"Não é essa. Pergunte quando cada linha executa, não se ela está correta.",en:"Not that one. Ask when each line runs, not whether it is correct."},
-    pt:["it('envia a confirmação após o pagamento', async () => {","  const fila = await enfileirarConfirmacao('PED-TESTE');","","  fila.onEnviado((envio) => {","    expect(envio.entregue).toBe(true);","    expect(envio.destinatario).toBe(cliente.email);","  });","});"],
-    en:["it('sends the confirmation after payment', async () => {","  const queue = await enqueueConfirmation('ORD-TEST');","","  queue.onSent((delivery) => {","    expect(delivery.received).toBe(true);","    expect(delivery.to).toBe(customer.email);","  });","});"],
+    badgeRev:{pt:"1 passed, 1 total ✓ (comparando a saída com ela mesma)",en:"1 passed, 1 total ✓ (comparing the output with itself)"},
+    culp:[5],
+    erro:{pt:"Não é essa. Pergunte de onde vem cada lado da comparação.",en:"Not that one. Ask where each side of the comparison comes from."},
+    pt:["it('envia a confirmação para o e-mail do cliente', async () => {","  const pedido = await pedidoPago('PED-TESTE');","","  const envio = await notificar(pedido.id, { canal: 'email', tentativas: 3 });","","  expect(envio.destinatario).toBe(envio.cliente.email);","});"],
+    en:["it('sends the confirmation to the customer email', async () => {","  const order = await paidOrder('ORD-TEST');","","  const delivery = await notify(order.id, { channel: 'email', attempts: 3 });","","  expect(delivery.to).toBe(delivery.customer.email);","});"],
     rev:{
-      pt:["O <code>await</code> da segunda linha espera o enfileiramento, não o envio.",
-          "<code>onEnviado</code> dispara depois que o teste já terminou, então as asserções rodam fora do caso: se falharem, falham no vazio.",
-          "A correção é esperar o evento de verdade, transformando <code>onEnviado</code> numa promessa e dando <code>await</code> nela."],
-      en:["The <code>await</code> on the second line waits for the enqueue, not for the delivery.",
-          "<code>onSent</code> fires after the test has already finished, so the assertions run outside the case: when they fail, they fail into the void.",
-          "The fix is to actually wait for the event, turning <code>onSent</code> into a promise and awaiting it."]}
+      pt:["Os dois lados da comparação saem do mesmo objeto que o código acabou de produzir.",
+          "Se <code>notificar</code> mandar para o endereço errado, ele grava o endereço errado nos dois campos e a igualdade continua verdadeira: o teste concorda com o sistema em vez de conferi-lo.",
+          "O controle tem que vir de fora, da fixture: <code>expect(envio.destinatario).toBe('ana@acme.com')</code>."],
+      en:["Both sides of the comparison come from the same object the code has just produced.",
+          "If <code>notify</code> sends to the wrong address, it writes that wrong address into both fields and the equality still holds: the test agrees with the system instead of checking it.",
+          "The control has to come from outside, from the fixture: <code>expect(delivery.to).toBe('ana@acme.com')</code>."]}
   },
   { arq:{pt:"frete.spec.ts",en:"shipping.spec.ts"},
     badge:"1 passed, 1 total ✓",
@@ -1034,7 +1039,7 @@ footer p+p{margin-top:6px}
     rev:{
       pt:["A fábrica do mock devolve o módulo inteiro, e alguém acrescentou <code>calcularFrete</code> a ela junto com a dependência que se queria isolar.",
           "A asserção compara o retorno do mock com o número que o próprio mock define, e a implementação real nunca executa.",
-          "Mock serve para o que a unidade consome, nunca para a unidade."],
+          "Mock é para o que a unidade consome, nunca para a unidade."],
       en:["The mock factory returns the whole module, and somebody added <code>calculateShipping</code> to it alongside the dependency they meant to isolate.",
           "The assertion compares the mock's return value with the number the mock itself defines, and the real implementation never runs.",
           "Mocks are for what the unit consumes, never for the unit."]}
@@ -1044,8 +1049,8 @@ footer p+p{margin-top:6px}
     badgeRev:{pt:"1 passed, 1 total ✓ (verdadeiro por vacuidade)",en:"1 passed, 1 total ✓ (vacuously true)"},
     culp:[5],
     erro:{pt:"Não é essa. Pense no que a asserção devolve se a lista chegar vazia.",en:"Not that one. Think about what the assertion returns if the list arrives empty."},
-    pt:["it('não lista cupom expirado', async () => {","  await semear([cupomAtivo, cupomExpirado]);","","  const ativos = await listarCupons({ apenasAtivos: true });","","  expect(ativos.every((c) => c.validade >= hoje())).toBe(true);","});"],
-    en:["it('does not list expired coupons', async () => {","  await seed([activeCoupon, expiredCoupon]);","","  const active = await listCoupons({ activeOnly: true });","","  expect(active.every((c) => c.validUntil >= today())).toBe(true);","});"],
+    pt:["it('não lista cupom expirado', async () => {","  await semear([cupomAtivo, cupomExpirado]);","","  const ativos = await listarCupons({ apenasAtivos: true });","","  expect(ativos.every(estaVigente)).toBe(true);","});"],
+    en:["it('does not list expired coupons', async () => {","  await seed([activeCoupon, expiredCoupon]);","","  const active = await listCoupons({ activeOnly: true });","","  expect(active.every(isCurrent)).toBe(true);","});"],
     rev:{
       pt:["<code>every</code> devolve <code>true</code> para lista vazia.",
           "Se <code>listarCupons</code> quebrar e voltar sem nada, a asserção passa igualzinho a como passaria com o filtro perfeito, e a semeadura acima só dá a impressão de controle.",
@@ -1056,18 +1061,18 @@ footer p+p{margin-top:6px}
   },
   { arq:{pt:"pagamentos.spec.ts",en:"payments.spec.ts"},
     badge:"1 passed, 1 total ✓",
-    badgeRev:{pt:"1 passed, 1 total ✓ (o veredito chegou tarde)",en:"1 passed, 1 total ✓ (the verdict arrived too late)"},
-    culp:[3],
-    erro:{pt:"Não é essa. Repare no que o teste devolve para o Jest antes de terminar.",en:"Not that one. Look at what the test hands back to Jest before it ends."},
-    pt:["it('rejeita confirmação duplicada', async () => {","  const pedido = await pedidoPago('PED-TESTE');","","  expect(confirmar(pedido)).rejects.toThrow(PagamentoDuplicado);","});"],
-    en:["it('rejects duplicate confirmation', async () => {","  const order = await paidOrder('ORD-TEST');","","  expect(confirm(order)).rejects.toThrow(DuplicatePayment);","});"],
+    badgeRev:{pt:"1 passed, 1 total ✓ (nenhuma asserção executou)",en:"1 passed, 1 total ✓ (no assertion ran)"},
+    culp:[4,6],
+    erro:{pt:"Não é essa. Pergunte o que roda quando o código se comporta mal.",en:"Not that one. Ask what runs when the code misbehaves."},
+    pt:["it('rejeita confirmação duplicada', async () => {","  const pedido = await pedidoPago('PED-TESTE');","  await confirmar(pedido);","","  try {","    await confirmar(pedido);","  } catch (err) {","    expect(err).toBeInstanceOf(PagamentoDuplicado);","    expect(err.pedido).toBe(pedido.id);","  }","});"],
+    en:["it('rejects duplicate confirmation', async () => {","  const order = await paidOrder('ORD-TEST');","  await confirm(order);","","  try {","    await confirm(order);","  } catch (err) {","    expect(err).toBeInstanceOf(DuplicatePayment);","    expect(err.order).toBe(order.id);","  }","});"],
     rev:{
-      pt:["O <code>await</code> da linha de cima cobre a criação do pedido, não a asserção.",
-          "<code>rejects</code> devolve uma promessa que ninguém espera: o teste retorna antes dela resolver, e o Jest já contou o caso como aprovado.",
-          "Passaria até se <code>confirmar</code> aceitasse a duplicata sem lançar."],
-      en:["The <code>await</code> on the line above covers creating the order, not the assertion.",
-          "<code>rejects</code> returns a promise nobody waits for: the test returns before it settles, and Jest has already counted the case as passing.",
-          "It would pass even if <code>confirm</code> accepted the duplicate without throwing."]}
+      pt:["As duas asserções só rodam se <code>confirmar</code> lançar.",
+          "Quando a duplicata passa batido, que é exatamente o defeito que este teste existe para pegar, o <code>catch</code> não executa, nenhuma asserção acontece, e o Jest aprova um caso sem asserção nenhuma.",
+          "A correção é <code>await expect(confirmar(pedido)).rejects.toThrow(PagamentoDuplicado)</code>, ou declarar <code>expect.assertions(2)</code> no topo."],
+      en:["The two assertions only run if <code>confirm</code> throws.",
+          "When the duplicate slips through, which is exactly the defect this test exists to catch, the <code>catch</code> never executes, no assertion happens, and Jest passes a case with no assertions at all.",
+          "The fix is <code>await expect(confirm(order)).rejects.toThrow(DuplicatePayment)</code>, or declaring <code>expect.assertions(2)</code> at the top."]}
   },
   { arq:{pt:"pedidos.integration.spec.ts",en:"orders.integration.spec.ts"},
     badge:"1 passed, 1 total ✓",
@@ -1116,18 +1121,18 @@ footer p+p{margin-top:6px}
   },
   { arq:{pt:"resumo.spec.tsx",en:"summary.spec.tsx"},
     badge:"1 passed, 1 total ✓",
-    badgeRev:{pt:"1 passed, 1 total ✓ (incapaz de falhar)",en:"1 passed, 1 total ✓ (unable to fail)"},
-    culp:[2],
-    erro:{pt:"Não é essa. Leia o comando que o CI executa antes de estudar o teste.",en:"Not that one. Read the command CI runs before you study the test."},
-    pt:["// package.json","\"scripts\": {","  \"test:ci\": \"jest --ci --runInBand -u --coverage\"","}","","// resumo.spec.tsx","it('renderiza o resumo do pedido', () => {","  expect(renderizarResumo(pedido)).toMatchSnapshot();","});"],
-    en:["// package.json","\"scripts\": {","  \"test:ci\": \"jest --ci --runInBand -u --coverage\"","}","","// summary.spec.tsx","it('renders the order summary', () => {","  expect(renderSummary(order)).toMatchSnapshot();","});"],
+    badgeRev:{pt:"1 passed, 1 total ✓ (a asserção não sabe falhar)",en:"1 passed, 1 total ✓ (the assertion cannot fail)"},
+    culp:[5],
+    erro:{pt:"Não é essa. Pergunte o que a consulta devolve quando não acha nada.",en:"Not that one. Ask what the query returns when it finds nothing."},
+    pt:["const pedidoComCupom = { ...pedidoBase, cupom: 'DEZ' };","","it('mostra o total com o desconto aplicado', () => {","  render(<Resumo pedido={pedidoComCupom} />);","","  expect(screen.queryByText('Total: R$ 90,00')).toBeDefined();","  expect(screen.getByRole('button', { name: /finalizar/i })).toBeEnabled();","});"],
+    en:["const orderWithCoupon = { ...baseOrder, coupon: 'TEN' };","","it('shows the total with the discount applied', () => {","  render(<Summary order={orderWithCoupon} />);","","  expect(screen.queryByText('Total: $90.00')).toBeDefined();","  expect(screen.getByRole('button', { name: /checkout/i })).toBeEnabled();","});"],
     rev:{
-      pt:["O <code>-u</code> no meio das flags é <code>--updateSnapshot</code>.",
-          "Divergência de snapshot deixa de reprovar: o arquivo é reescrito e a suíte segue verde, então o teste compara a saída com o que quer que ela tenha sido na última execução, inclusive quando a última já estava errada.",
-          "Teste incapaz de falhar é decoração."],
-      en:["The <code>-u</code> tucked among the flags is <code>--updateSnapshot</code>.",
-          "A snapshot mismatch stops failing anything: the file is rewritten and the suite stays green, so the test compares the output against whatever it happened to be last run, including when last run was already wrong.",
-          "A test that cannot fail is decoration."]}
+      pt:["<code>queryByText</code> devolve <code>null</code> quando não encontra o texto, e <code>null</code> passa por <code>toBeDefined</code>.",
+          "A asserção do total fica verde com o desconto certo, com o desconto errado e com a linha do total ausente da tela.",
+          "Para exigir presença, o par é <code>getByText</code>, que lança quando não acha, ou <code>toBeInTheDocument()</code> no lugar de <code>toBeDefined</code>."],
+      en:["<code>queryByText</code> returns <code>null</code> when it finds nothing, and <code>null</code> sails through <code>toBeDefined</code>.",
+          "The total assertion stays green with the right discount, with the wrong discount, and with the total line missing from the screen altogether.",
+          "To demand presence, the pair is <code>getByText</code>, which throws when it finds nothing, or <code>toBeInTheDocument()</code> instead of <code>toBeDefined</code>."]}
   },
   { arq:{pt:"clientes.integration.spec.ts",en:"customers.integration.spec.ts"},
     badge:"2 passed, 2 total ✓",
